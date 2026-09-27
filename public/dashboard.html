@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/ena.css">
+<link rel="stylesheet" href="/assets/css/ena.css?v=20260927b">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -72,6 +72,7 @@
             <div class="msg bad">This console is closed.</div>
             <p class="small">No <b>ENA_ADMIN_PASSWORD</b> is configured for this project, so there is no password that can sign you in. Set that environment variable in Netlify &mdash; and <b>ENA_SESSION_SECRET</b> alongside it &mdash; then reload this page.</p>
           </div>
+        </div>
 
         <div data-app hidden>
           <div class="between" style="margin-bottom:26px">
@@ -90,6 +91,7 @@
               <button type="button" data-tab="overview" aria-selected="true">Overview</button>
               <button type="button" data-tab="meters" aria-selected="false">Meter signups</button>
               <button type="button" data-tab="enquiries" aria-selected="false">Enquiries</button>
+              <button type="button" data-tab="partners" aria-selected="false">Partner requests</button>
               <button type="button" data-tab="products" aria-selected="false">Products</button>
               <button type="button" data-tab="updates" aria-selected="false">Product updates</button>
               <button type="button" data-tab="stock" aria-selected="false">Stock</button>
@@ -129,6 +131,16 @@
                 <h2>Enquiries</h2>
                 <p class="small">Contact-form messages and mini-grid design requests. Each one is also emailed to info@enapoint.com.</p>
                 <div class="table-wrap" style="margin-top:18px"><table><thead><tr><th>Received</th><th>Topic</th><th>From</th><th>Message</th></tr></thead><tbody data-enquiry-list></tbody></table></div>
+              </div>
+
+              <div class="panel" data-panel="partners" hidden>
+                <div class="between"><h2 class="mb0">Partner requests</h2>
+                  <select data-partner-filter style="width:auto" aria-label="Filter partner requests"><option value="submitted">New</option><option value="reviewing">In review</option><option value="approved">Approved</option><option value="declined">Declined</option><option value="">All requests</option></select>
+                </div>
+                <p class="small">Requests from the integration setup at /partners/setup. Review each one, then issue a test key &mdash; it is shown once, so send it to the partner&rsquo;s technical contact securely.</p>
+                <div class="grid g4" data-partner-summary style="margin:18px 0"></div>
+                <div class="card" data-partner-newkey hidden style="margin-bottom:24px"></div>
+                <div data-partner-list></div>
               </div>
 
               <div class="panel" data-panel="products" hidden>
@@ -271,7 +283,7 @@
         </div>
         <div>
           <h4>Partners</h4>
-          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/developers#reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/support">System status</a></li></ul>
+          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/partners/setup">Integration setup</a></li><li><a href="/partners/reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/support">System status</a></li></ul>
         </div>
         <div>
           <h4>Account</h4>
@@ -286,7 +298,7 @@
   </footer>
 
 </div>
-<script src="/assets/js/ena.js"></script>
-<script src="/assets/js/console.js"></script>
+<script src="/assets/js/ena.js?v=20260927b"></script>
+<script src="/assets/js/console.js?v=20260927b"></script>
 </body>
 </html>

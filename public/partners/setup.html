@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integration setup — Enapoint</title>
+<meta name="description" content="Set up an ENA partner integration in five short steps: tell us about your organisation, choose what you want to build and get sandbox access within two working days.">
+<meta property="og:title" content="Integration setup — Enapoint">
+<meta property="og:description" content="Set up an ENA partner integration in five short steps: tell us about your organisation, choose what you want to build and get sandbox access within two working days.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.enapoint.com/partners/setup">
+<meta property="og:image" content="https://www.enapoint.com/assets/img/brand/ena-lockup.png">
+<link rel="canonical" href="https://www.enapoint.com/partners/setup">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ena.css?v=20260927b">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+  <header class="site-header">
+    <div class="header-top">
+      <a class="brand" href="/" aria-label="Enapoint home">
+        <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+        <span>ENAPOINT</span>
+      </a>
+      <div class="header-actions">
+        <a class="pill hide-sm" href="/register">Register a meter</a>
+        <button class="icon-btn" data-theme-toggle type="button" aria-label="Switch theme">&#9728;</button>
+        <a class="cta" href="/contact">Request a quote</a>
+        <button class="icon-btn nav-toggle" data-nav-toggle type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span aria-hidden="true"></span></button>
+      </div>
+    </div>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/panels">Solar</a>
+        <a href="/cells">Storage</a>
+        <a href="/ev">EV charging</a>
+        <a href="/meter">Metering</a>
+        <a href="/grid">Mini-grids</a>
+        <a href="/pops">POPS</a>
+        <a href="/lab">Manufacturing</a>
+        <a href="/refi">Impact</a>
+        <a href="/app">ENA Control</a>
+        <a href="/developers" aria-current="page">Partners &amp; API</a>
+        <a href="/about">About</a>
+        <a href="/support">Support</a>
+        <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap wizard-wrap">
+        <a class="back-link" href="/developers">&larr; Partners &amp; API</a>
+        <p class="eyebrow" style="margin-top:18px">Integration setup</p>
+        <h1 class="wizard-title">Set up your ENA integration</h1>
+        <p class="lede">Answer a few questions and our integrations desk prepares your sandbox access. Your progress is saved on this device as you go.</p>
+
+        <ol class="wizard-steps" data-wizard-steps aria-label="Setup progress">
+          <li aria-current="step"><span>1</span><b>Organisation</b></li>
+          <li><span>2</span><b>Integration</b></li>
+          <li><span>3</span><b>Features</b></li>
+          <li><span>4</span><b>Contacts</b></li>
+          <li><span>5</span><b>Review</b></li>
+        </ol>
+
+        <form class="card raised wizard" name="partner-setup" method="POST" action="/partners/setup" data-netlify="true" netlify-honeypot="bot-field" data-partner-wizard novalidate>
+          <input type="hidden" name="form-name" value="partner-setup">
+          <input type="hidden" name="reference" value="">
+          <p hidden><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+          <fieldset class="wizard-step" data-step="1">
+            <legend><span class="tiny">Step 1 of 5</span>Tell us about your organisation</legend>
+            <div class="field"><label for="p-org">Organisation name</label><input id="p-org" name="organisation" required data-error="Please enter your organisation&#39;s name." maxlength="200" autocomplete="organization" placeholder="e.g. Sterling Bank"></div>
+            <p class="field-label">Type of organisation</p>
+            <div class="choice-grid" role="radiogroup" aria-label="Type of organisation">
+              <label class="choice"><input type="radio" name="orgType" value="bank" required><span><b>Bank</b><small>Commercial or microfinance</small></span></label>
+              <label class="choice"><input type="radio" name="orgType" value="fintech"><span><b>Fintech or payments</b><small>Wallets, aggregators, PSPs</small></span></label>
+              <label class="choice"><input type="radio" name="orgType" value="disco"><span><b>Distribution company</b><small>DisCo or mini-grid operator</small></span></label>
+              <label class="choice"><input type="radio" name="orgType" value="government"><span><b>Government or regulator</b><small>Agency or parastatal</small></span></label>
+              <label class="choice"><input type="radio" name="orgType" value="installer"><span><b>Installer or reseller</b><small>Sells or fits ENA hardware</small></span></label>
+              <label class="choice"><input type="radio" name="orgType" value="developer"><span><b>Software company</b><small>Builds tools for others</small></span></label>
+              <label class="choice"><input type="radio" name="orgType" value="other"><span><b>Something else</b><small>Tell us in step 4</small></span></label>
+            </div>
+            <div class="field-row" style="margin-top:18px">
+              <div class="field"><label for="p-country">Country</label><select id="p-country" name="country"><option>Nigeria</option><option>Ghana</option><option>Other ECOWAS country</option><option>Qatar</option><option>Other Gulf country</option><option>United Kingdom</option><option>United States</option><option>Somewhere else</option></select></div>
+              <div class="field"><label for="p-web">Website (optional)</label><input id="p-web" name="website" type="url" inputmode="url" maxlength="200" placeholder="https://"></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="wizard-step" data-step="2" hidden>
+            <legend><span class="tiny">Step 2 of 5</span>What do you want to build?</legend>
+            <p class="small">Choose the option closest to your goal. You can add more later.</p>
+            <div class="choice-grid wide" role="radiogroup" aria-label="Integration type">
+              <label class="choice"><input type="radio" name="integration" value="vending" required><span><b>Sell electricity units</b><small>Let customers buy prepaid units in your app, USSD menu, website or branches.</small></span></label>
+              <label class="choice"><input type="radio" name="integration" value="metering"><span><b>Manage meters</b><small>Register, verify and update customer meters from your own systems.</small></span></label>
+              <label class="choice"><input type="radio" name="integration" value="monitoring"><span><b>Monitor and report</b><small>Read-only access to meters, vending volumes and platform health.</small></span></label>
+              <label class="choice"><input type="radio" name="integration" value="catalogue"><span><b>Products and devices</b><small>Use the ENA catalogue and device data in your own tools.</small></span></label>
+              <label class="choice"><input type="radio" name="integration" value="custom"><span><b>Something custom</b><small>A combination, or an idea you'd like to discuss with us.</small></span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="wizard-step" data-step="3" hidden>
+            <legend><span class="tiny">Step 3 of 5</span>Choose features and channels</legend>
+            <p class="field-label">Features you need <span class="optional">select all that apply</span></p>
+            <div class="chip-grid">
+              <label class="check-chip"><input type="checkbox" name="capabilities" value="quote-topups"><span>Price top-ups</span></label>
+              <label class="check-chip"><input type="checkbox" name="capabilities" value="sell-units"><span>Sell units and issue tokens</span></label>
+              <label class="check-chip"><input type="checkbox" name="capabilities" value="register-meters"><span>Register meters</span></label>
+              <label class="check-chip"><input type="checkbox" name="capabilities" value="verify-meters"><span>Verify meters</span></label>
+              <label class="check-chip"><input type="checkbox" name="capabilities" value="vending-log"><span>Sales and delivery history</span></label>
+              <label class="check-chip"><input type="checkbox" name="capabilities" value="webhooks"><span>Instant notifications</span></label>
+              <label class="check-chip"><input type="checkbox" name="capabilities" value="device-data"><span>Device status</span></label>
+              <label class="check-chip"><input type="checkbox" name="capabilities" value="products"><span>Product catalogue</span></label>
+            </div>
+            <p class="field-label" style="margin-top:22px">Where your customers or staff use it <span class="optional">select all that apply</span></p>
+            <div class="chip-grid">
+              <label class="check-chip"><input type="checkbox" name="channels" value="mobile-app"><span>Mobile app</span></label>
+              <label class="check-chip"><input type="checkbox" name="channels" value="web"><span>Website</span></label>
+              <label class="check-chip"><input type="checkbox" name="channels" value="ussd"><span>USSD</span></label>
+              <label class="check-chip"><input type="checkbox" name="channels" value="branch"><span>Branches or agents</span></label>
+              <label class="check-chip"><input type="checkbox" name="channels" value="pos"><span>POS terminals</span></label>
+              <label class="check-chip"><input type="checkbox" name="channels" value="back-office"><span>Back office only</span></label>
+            </div>
+            <div class="field-row" style="margin-top:22px">
+              <div class="field"><label for="p-volume">Expected monthly transactions</label><select id="p-volume" name="monthlyVolume"><option value="not-sure">Not sure yet</option><option value="under-1k">Fewer than 1,000</option><option value="1k-10k">1,000 to 10,000</option><option value="10k-100k">10,000 to 100,000</option><option value="over-100k">More than 100,000</option></select></div>
+              <div class="field"><label for="p-golive">When would you like to go live?</label><select id="p-golive" name="goLive"><option value="exploring">Just exploring</option><option value="1-month">Within a month</option><option value="1-3-months">In one to three months</option><option value="3-months-plus">In more than three months</option></select></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="wizard-step" data-step="4" hidden>
+            <legend><span class="tiny">Step 4 of 5</span>Who should we contact?</legend>
+            <div class="field-row">
+              <div class="field"><label for="p-name">Your full name</label><input id="p-name" name="contactName" required data-error="Please enter your full name." maxlength="120" autocomplete="name"></div>
+              <div class="field"><label for="p-role">Job title (optional)</label><input id="p-role" name="contactRole" maxlength="120" autocomplete="organization-title"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="p-email">Work email</label><input id="p-email" name="contactEmail" type="email" required data-error="Please enter your work email address." inputmode="email" autocomplete="email"></div>
+              <div class="field"><label for="p-phone">Phone (optional)</label><input id="p-phone" name="contactPhone" type="tel" inputmode="tel" autocomplete="tel"></div>
+            </div>
+            <div class="field"><label for="p-tech">Technical contact's email (optional)</label><input id="p-tech" name="techEmail" type="email" inputmode="email"><p class="hint">We send the sandbox details here. Leave it blank to receive them yourself.</p></div>
+            <div class="field mb0"><label for="p-notes">Anything else we should know? (optional)</label><textarea id="p-notes" name="notes" maxlength="5000" placeholder="For example, your timeline, existing systems or questions for our team."></textarea></div>
+          </fieldset>
+
+          <fieldset class="wizard-step" data-step="5" hidden>
+            <legend><span class="tiny">Step 5 of 5</span>Review and submit</legend>
+            <p class="small">Check your answers. Select <b>Edit</b> to change anything.</p>
+            <div class="review" data-review></div>
+            <label class="check" style="margin-top:18px"><input type="checkbox" name="agree" value="yes" required> <span>I confirm I'm authorised to request API access for this organisation, and I agree that Enapoint may contact me about this request.</span></label>
+          </fieldset>
+
+          <div class="msg" data-msg hidden></div>
+          <div class="wizard-nav">
+            <button class="btn ghost" type="button" data-prev hidden>Back</button>
+            <button class="btn" type="button" data-next>Continue</button>
+            <button class="btn" type="submit" data-submit hidden>Submit request</button>
+          </div>
+        </form>
+
+        <div class="card raised wizard-done" data-wizard-done hidden tabindex="-1">
+          <div class="done-mark" aria-hidden="true">&#10003;</div>
+          <h2>Your request is in</h2>
+          <p>Thank you. Our integrations desk reviews every request personally and replies within two working days.</p>
+          <div class="spec-row"><span class="k">Your reference</span><span class="v mono" data-done-ref></span></div>
+          <div class="spec-row"><span class="k">Confirmation sent to</span><span class="v" data-done-email></span></div>
+          <h3 style="margin-top:26px">What happens next</h3>
+          <ol class="steps" style="padding:0;margin:14px 0 0">
+            <li><div><h4>We review your request</h4><p class="small mb0">We may call to agree the features and permissions you need.</p></div></li>
+            <li><div><h4>You receive sandbox access</h4><p class="small mb0">Your technical contact gets a sandbox key and the full technical reference.</p></div></li>
+            <li><div><h4>You build, test and go live</h4><p class="small mb0">A named contact at ENA supports you through testing and the go-live review.</p></div></li>
+          </ol>
+          <div class="flex" style="margin-top:26px"><a class="cta" href="/partners/reference">Share the technical reference</a><a class="pill" href="/">Back to the homepage</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="/" style="margin-bottom:12px" aria-label="Enapoint home">
+            <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+            <span>ENAPOINT</span>
+          </a>
+          <p class="small">Decentralised energy &mdash; solar, storage, power conversion and the software that reports on all three. Abuja, Nigeria &middot; Quincy, Massachusetts.</p>
+          <p class="small mb0"><a href="mailto:info@enapoint.com">info@enapoint.com</a><br><a href="tel:+2348179189600">+234 817 918 9600</a></p>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul><li><a href="/panels">ENA Solar Panels</a></li><li><a href="/panels#slates">ENA Slates</a></li><li><a href="/cells">ENA Powerwall</a></li><li><a href="/cells#lit">ENA LIT LI</a></li><li><a href="/pops">POPS</a></li><li><a href="/ev">EV charging</a></li></ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul><li><a href="/about">About Enapoint</a></li><li><a href="/lab">Manufacturing</a></li><li><a href="/refi">Sustainability &amp; impact</a></li><li><a href="/contact">Contact</a></li></ul>
+        </div>
+        <div>
+          <h4>Partners</h4>
+          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/partners/setup">Integration setup</a></li><li><a href="/partners/reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/support">System status</a></li></ul>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <ul><li><a href="/register">Register a meter</a></li><li><a href="/meter#topup">Buy units</a></li><li><a href="/app">Get ENA Control</a></li><li><a href="/support">Support</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>&copy; 2026 Ena Plus Ltd, trading as Enapoint</span>
+        <span class="flex"><a href="/support">Privacy</a><a href="/support">Terms</a><a href="/support">NDPR</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<script src="/assets/js/ena.js?v=20260927b"></script>
+<script src="/assets/js/partners.js?v=20260927b"></script>
+
+</body>
+</html>

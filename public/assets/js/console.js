@@ -14,7 +14,7 @@
   var app = document.querySelector("[data-app]");
   if (!gate || !app) return;
 
-  var PANELS = ["overview", "meters", "enquiries", "products", "updates", "stock", "devices", "apis", "keys"];
+  var PANELS = ["overview", "meters", "enquiries", "partners", "products", "updates", "stock", "devices", "apis", "keys"];
   var cache = {};
 
   /* --------------------------------------------------------------- session */
@@ -82,6 +82,7 @@
     if (name === "overview") loadOverview();
     if (name === "meters") loadMeters();
     if (name === "enquiries") loadEnquiries();
+    if (name === "partners") loadPartners();
     if (name === "products") loadProducts();
     if (name === "updates") loadUpdates();
     if (name === "stock") loadStock();
@@ -518,6 +519,134 @@
       .catch(function (err) { oops("[data-enquiry-list]", err); });
   }
 
+  /* ------------------------------------------------------- partner requests */
+
+  var PARTNER_LABELS = {
+    orgType: { bank: "Bank", fintech: "Fintech or payments", disco: "Distribution company", government: "Government or regulator", installer: "Installer or reseller", developer: "Software company", other: "Other" },
+    integration: { vending: "Sell electricity units", metering: "Manage meters", monitoring: "Monitor and report", catalogue: "Products and devices", custom: "Something custom" },
+    capabilities: { "quote-topups": "Price top-ups", "sell-units": "Sell units", "register-meters": "Register meters", "verify-meters": "Verify meters", "vending-log": "Sales history", webhooks: "Notifications", "device-data": "Device status", products: "Product catalogue" },
+    channels: { "mobile-app": "Mobile app", web: "Website", ussd: "USSD", branch: "Branches or agents", pos: "POS terminals", "back-office": "Back office" },
+    monthlyVolume: { "not-sure": "Not sure yet", "under-1k": "Fewer than 1,000", "1k-10k": "1,000 to 10,000", "10k-100k": "10,000 to 100,000", "over-100k": "More than 100,000" },
+    goLive: { exploring: "Just exploring", "1-month": "Within a month", "1-3-months": "One to three months", "3-months-plus": "More than three months" },
+  };
+  var PARTNER_STATUS = { submitted: ["New", "warn"], reviewing: ["In review", ""], approved: ["Approved", "ok"], declined: ["Declined", "bad"] };
+
+  function label(group, value) { return (PARTNER_LABELS[group] || {})[value] || value || "—"; }
+  function labelList(group, list) { return list && list.length ? list.map(function (v) { return label(group, v); }).join(", ") : "None selected"; }
+
+  var partnerFilter = document.querySelector("[data-partner-filter]");
+  if (partnerFilter) partnerFilter.addEventListener("change", function () { load("partners", true); });
+
+  function loadPartners() {
+    busy("[data-partner-list]");
+    var status = partnerFilter ? partnerFilter.value : "";
+    api("/api/partners/applications" + (status ? "?status=" + encodeURIComponent(status) : ""))
+      .then(function (d) {
+        document.querySelector("[data-partner-summary]").innerHTML = ["submitted", "reviewing", "approved", "declined"].map(function (k) {
+          return '<div class="card kpi"><b>' + (d.summary[k] || 0) + "</b><span>" + PARTNER_STATUS[k][0].toLowerCase() + "</span></div>";
+        }).join("");
+        var host = document.querySelector("[data-partner-list]");
+        host.innerHTML = d.applications.length
+          ? d.applications.map(renderApplication).join("")
+          : '<p class="small">No requests match this filter.</p>';
+        wirePartnerActions(host);
+      })
+      .catch(function (err) { oops("[data-partner-list]", err); });
+  }
+
+  function renderApplication(a) {
+    var tone = PARTNER_STATUS[a.status] || [a.status, ""];
+    var rows = [
+      ["Organisation type", label("orgType", a.orgType)],
+      ["Country", a.country || "—"],
+      ["Website", a.website || "Not provided"],
+      ["Wants to", label("integration", a.integration)],
+      ["Features", labelList("capabilities", a.capabilities)],
+      ["Channels", labelList("channels", a.channels)],
+      ["Monthly volume", label("monthlyVolume", a.monthlyVolume)],
+      ["Go-live", label("goLive", a.goLive)],
+      ["Contact", a.contactName + (a.contactRole ? ", " + a.contactRole : "") + " · " + a.contactEmail + (a.contactPhone ? " · " + a.contactPhone : "")],
+      ["Technical contact", a.techEmail || "Same as above"],
+    ];
+    if (a.notes) rows.push(["Notes", a.notes]);
+    var key = a.testKey
+      ? '<div class="spec-row"><span class="k">Test key</span><span class="v"><span class="mono">' + esc(a.testKey.keyPrefix || "") + "…</span> " +
+        (a.testKey.revoked ? '<span class="tag bad">revoked</span>' : '<span class="tag ok">active</span>') + "</span></div>"
+      : "";
+    var ref = esc(a.reference);
+    var actions = [];
+    if (a.status === "submitted") actions.push('<button class="btn ghost tiny-btn" type="button" data-partner-set="reviewing" data-ref="' + ref + '">Start review</button>');
+    if (a.status !== "declined" && (!a.testKey || a.testKey.revoked)) actions.push('<button class="btn tiny-btn" type="button" data-partner-key="' + ref + '">Approve and issue test key</button>');
+    else if (a.status !== "approved" && a.status !== "declined") actions.push('<button class="btn tiny-btn" type="button" data-partner-set="approved" data-ref="' + ref + '">Approve</button>');
+    if (a.status !== "declined") actions.push('<button class="btn ghost tiny-btn" type="button" data-partner-set="declined" data-ref="' + ref + '">Decline</button>');
+    else actions.push('<button class="btn ghost tiny-btn" type="button" data-partner-set="reviewing" data-ref="' + ref + '">Reopen</button>');
+
+    return (
+      '<article class="card raised" style="margin-bottom:18px">' +
+      '<div class="between"><div><h3 class="mb0">' + esc(a.organisation) + '</h3><span class="tiny mono">' + ref + " · " + when(a.createdAt) + "</span></div>" +
+      '<span class="tag ' + tone[1] + '">' + esc(tone[0]) + "</span></div>" +
+      '<div style="margin-top:14px">' +
+      rows.map(function (r) { return '<div class="spec-row"><span class="k">' + esc(r[0]) + '</span><span class="v">' + esc(r[1]) + "</span></div>"; }).join("") +
+      key + "</div>" +
+      '<div class="field" style="margin-top:16px"><label for="notes-' + ref + '">Review notes (staff only)</label>' +
+      '<textarea id="notes-' + ref + '" data-partner-notes="' + ref + '" rows="2">' + esc(a.reviewerNotes) + "</textarea></div>" +
+      '<div class="flex">' + actions.join("") +
+      '<button class="btn ghost tiny-btn" type="button" data-partner-save="' + ref + '">Save notes</button>' +
+      '<a class="btn ghost tiny-btn" href="mailto:' + esc(a.techEmail || a.contactEmail) + "?subject=" +
+      encodeURIComponent("Your Enapoint integration request " + a.reference) + '">Email partner</a></div>' +
+      '<div class="msg" data-partner-msg="' + ref + '" hidden></div>' +
+      "</article>"
+    );
+  }
+
+  function wirePartnerActions(host) {
+    function msgFor(ref) { return host.querySelector('[data-partner-msg="' + ref + '"]'); }
+    function notesFor(ref) { var el = host.querySelector('[data-partner-notes="' + ref + '"]'); return el ? el.value : undefined; }
+
+    host.querySelectorAll("[data-partner-set]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var ref = button.getAttribute("data-ref");
+        var status = button.getAttribute("data-partner-set");
+        if (status === "declined" && !window.confirm("Decline " + ref + "? You can reopen it later.")) return;
+        button.disabled = true;
+        api("/api/partners/applications/" + encodeURIComponent(ref), { method: "PATCH", body: { status: status, reviewerNotes: notesFor(ref) } })
+          .then(function () { load("partners", true); })
+          .catch(function (err) { button.disabled = false; setMessage(msgFor(ref), err.message, "bad"); });
+      });
+    });
+
+    host.querySelectorAll("[data-partner-save]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var ref = button.getAttribute("data-partner-save");
+        api("/api/partners/applications/" + encodeURIComponent(ref), { method: "PATCH", body: { reviewerNotes: notesFor(ref) } })
+          .then(function () { setMessage(msgFor(ref), "Notes saved.", "good"); })
+          .catch(function (err) { setMessage(msgFor(ref), err.message, "bad"); });
+      });
+    });
+
+    host.querySelectorAll("[data-partner-key]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var ref = button.getAttribute("data-partner-key");
+        if (!window.confirm("Approve " + ref + " and issue a test key? The key is shown once.")) return;
+        button.disabled = true;
+        api("/api/partners/applications/" + encodeURIComponent(ref) + "/key", { method: "POST" })
+          .then(function (result) {
+            var box = document.querySelector("[data-partner-newkey]");
+            box.hidden = false;
+            box.innerHTML =
+              '<p class="tiny">Test key for ' + esc(result.application.organisation) + " · copy it now, it is never shown again</p>" +
+              '<div class="secret">' + esc(result.key) + "</div>" +
+              '<p class="small mb0" style="margin-top:10px">Scopes: ' + esc(result.record.scopes.join(", ")) + ". Test keys never move real money.</p>";
+            box.scrollIntoView({ behavior: "smooth", block: "center" });
+            cache.keys = false;
+            if (partnerFilter && partnerFilter.value && partnerFilter.value !== "approved") partnerFilter.value = "approved";
+            load("partners", true);
+          })
+          .catch(function (err) { button.disabled = false; setMessage(msgFor(ref), err.message, "bad"); });
+      });
+    });
+  }
+
   /* ------------------------------------------------------------------- keys */
 
   function loadKeys() {
@@ -579,14 +708,19 @@
       ["GET", "/api/products", "List the catalogue", "public"],
       ["POST", "/api/products", "Create a product", "write"],
       ["PATCH", "/api/products/:slug", "Update a product", "write"],
-      ["GET", "/api/updates", "List product updates", "public"],
+      ["GET", "/api/updates", "List product updates (drafts included with a key)", "public"],
       ["POST", "/api/updates", "Publish a product update", "write"],
-      ["GET", "/api/stock", "Stock on hand by SKU", "write"],
+      ["PATCH", "/api/updates/:id", "Edit, publish or unpublish an update", "write"],
+      ["DELETE", "/api/updates/:id", "Delete an update", "write"],
+      ["GET", "/api/stock", "Stock on hand by SKU", "read"],
+      ["PATCH", "/api/stock/:sku", "Set or adjust a quantity", "write"],
       ["POST", "/api/stock/upload", "Upload a stock CSV", "write"],
+      ["GET", "/api/stock/uploads", "Stock upload history", "read"],
       ["POST", "/api/payments/quote", "Price a top-up", "public"],
       ["POST", "/api/payments/initialize", "Start a payment", "public"],
       ["GET", "/api/payments/verify/:reference", "Verify and settle", "public"],
       ["POST", "/api/payments/webhook", "Provider callback", "signed"],
+      ["POST", "/api/payments/simulate", "Settle an order taken offline", "console / test key"],
       ["POST", "/api/meters/verify", "Check whether a meter is registered", "public"],
       ["POST", "/api/meters/register", "Register a meter (verified with a write key)", "public / write"],
       ["GET", "/api/meters", "List registered meters", "read"],
@@ -594,6 +728,9 @@
       ["GET", "/api/vend", "Vending log", "read"],
       ["POST", "/api/vend/flush", "Deliver queued units", "write"],
       ["GET", "/api/devices", "Connected devices", "read"],
+      ["GET", "/api/overview", "Operations summary", "read"],
+      ["GET", "/api/keys", "Manage API keys", "console"],
+      ["GET", "/api/partners/applications", "Review partner requests", "console"],
       ["GET", "/api/status", "Platform health", "public"],
     ];
     host.innerHTML = endpoints.map(function (e) {

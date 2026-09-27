@@ -116,8 +116,18 @@
 
 [[redirects]]
   from = "/docs"
-  to = "/developers"
+  to = "/partners/reference"
   status = 302
+
+[[redirects]]
+  from = "/partners"
+  to = "/developers"
+  status = 301
+
+[[redirects]]
+  from = "/partners/"
+  to = "/developers"
+  status = 301
 
 # Partner tooling (Swagger UI, Postman, code generators) fetches the spec cross-origin.
 [[headers]]

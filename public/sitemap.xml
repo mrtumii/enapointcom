@@ -80,4 +80,14 @@
     <lastmod>2026-09-26</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://www.enapoint.com/partners/setup</loc>
+    <lastmod>2026-09-27</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.enapoint.com/partners/reference</loc>
+    <lastmod>2026-09-27</lastmod>
+    <priority>0.5</priority>
+  </url>
 </urlset>

@@ -1,0 +1,11 @@
+{
+  "name": "enapoint",
+  "private": true,
+  "type": "module",
+  "scripts": {},
+  "dependencies": {
+    "@netlify/blobs": "^11.1.1",
+    "@netlify/database": "^2.0.1",
+    "@netlify/functions": "^6.0.0"
+  }
+}
