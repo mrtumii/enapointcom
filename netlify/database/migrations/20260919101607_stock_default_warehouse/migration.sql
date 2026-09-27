@@ -1,0 +1,1 @@
+ALTER TABLE "stock_items" ALTER COLUMN "warehouse" SET DEFAULT 'abuja-hq';

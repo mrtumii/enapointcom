@@ -1,0 +1,70 @@
+-- Baseline catalogue, stock and demo devices for the ENA Point console.
+
+INSERT INTO "products" ("slug","name","category","tagline","description","price_kobo","price_note","status","specs","sort_order") VALUES
+('ena-smart-meter-1p','ENA Smart Meter 1P','metering','Single-phase prepaid meter, STS compliant',
+ 'Register by IMEI or RFID and top up from the web or the app. Credit is pushed to the device; if it is offline the purchase queues and lands on reconnect, with a backup token issued either way.',
+ 8500000,'installed, per meter','available',
+ '[{"k":"Phase","v":"Single, 230 V"},{"k":"Rated current","v":"5(60) A"},{"k":"Comms","v":"NB-IoT + GPRS fallback"},{"k":"Vending","v":"STS token + direct push"},{"k":"Accuracy","v":"Class 1"}]',10),
+('ena-smart-meter-3p','ENA Smart Meter 3P','metering','Three-phase prepaid meter for estates and light industry',
+ 'The three-phase sibling of the 1P, with per-phase load reporting and tamper logging. Built for landlords, estates and PPP operators running bulk registration and tenant sub-accounts.',
+ 16500000,'installed, per meter','available',
+ '[{"k":"Phase","v":"Three, 400 V"},{"k":"Rated current","v":"10(100) A"},{"k":"Comms","v":"NB-IoT + GPRS fallback"},{"k":"Logging","v":"Per-phase load, tamper, reverse flow"},{"k":"Accuracy","v":"Class 1"}]',20),
+('ena-solar-roof-tile','ENA Solar Roof Tile','solar','Interlocking photovoltaic tile — the roof is the array',
+ 'Interlocking PV tiles replace the roofing instead of sitting on top of it. No racking, no per-module penetrations, pre-wired in the shop with an integrated junction box and pre-terminated leads, and generation metered straight into your ENA account.',
+ 4200000,'per square metre, supplied and fitted','available',
+ '[{"k":"Output","v":"118 Wp per tile"},{"k":"Coverage","v":"0.42 m² per tile"},{"k":"Wiring","v":"Pre-terminated, integrated J-box"},{"k":"Wind rating","v":"180 km/h"},{"k":"Warranty","v":"25 yr generation, 15 yr weatherproofing"}]',30),
+('ena-panel-550','ENA Panel 550','solar','Conventional framed module for retrofits',
+ 'Where a retrofit makes more sense than a re-roof, ENA supplies conventional framed modules on the same rail and cable system, fabricated and pre-wired in the shop so the crew on the roof is laying an array, not improvising one.',
+ 18500000,'per module','available',
+ '[{"k":"Output","v":"550 Wp"},{"k":"Cell","v":"Monocrystalline PERC, half-cut"},{"k":"Efficiency","v":"21.3%"},{"k":"Dimensions","v":"2278 x 1134 x 35 mm"},{"k":"Warranty","v":"25 yr linear output"}]',40),
+('ena-li-360','ENA LI 360 Home Battery','storage','Wall-mounted 10 kWh LiFePO4 with hybrid inverter',
+ 'A wall-mounted LiFePO4 unit with a hybrid inverter, PV inputs and a touchscreen — quiet, sealed and built for heat. State of charge, temperature and cycle count report into the app, so you know the reserve before the outage, not after.',
+ 395000000,'supplied and commissioned','available',
+ '[{"k":"Usable energy","v":"10.2 kWh"},{"k":"Chemistry","v":"LiFePO4, 6000 cycles to 80%"},{"k":"Inverter","v":"5 kW hybrid, 8 kW peak"},{"k":"PV input","v":"2 x MPPT, 6 kW"},{"k":"Ingress","v":"IP65, sealed, fanless"}]',50),
+('ena-cell-cabinet','ENA Cabinet 40','storage','40 kWh rack for installers and mini-grid operators',
+ 'The cell and cabinet range behind the home battery, supplied to installers and mini-grid operators. Packs are built to be opened: cells below 80% of rated capacity are triaged at the HUB, re-graded and redeployed into stationary storage.',
+ 1280000000,'per cabinet','available',
+ '[{"k":"Usable energy","v":"40.8 kWh"},{"k":"Voltage","v":"51.2 V nominal, parallel to 400 kWh"},{"k":"BMS","v":"Active balancing, CAN + RS485"},{"k":"Thermal","v":"Forced air, 55 C derate"},{"k":"Second life","v":"Cell-level triage and re-grade"}]',60),
+('ena-plus-charger','ENA Plus Wall Charger','ev','9.6–11.5 kW home charger, Wi-Fi and voice control',
+ 'A wall unit for the house, metered to the kWh and settled to your ENA wallet. Same OCPP stack as the forecourt hardware, so one network, one tariff and one app across the whole estate.',
+ 78000000,'supplied and installed','available',
+ '[{"k":"Output","v":"9.6 - 11.5 kW"},{"k":"Connector","v":"Type 2, tethered 5 m"},{"k":"Protocol","v":"OCPP 1.6J"},{"k":"Control","v":"Wi-Fi, app, voice assistant"},{"k":"Ingress","v":"IP66"}]',70),
+('ena-dc-pedestal','ENA DC Pedestal','ev','Forecourt-grade DC fast charging, built slim',
+ 'A 300 mm footprint housing 60 to 150 kW of DC power, with dual-gun cable management and the same OCPP stack as the wall units. Live bay availability, a 15-minute free hold and per-session receipts land in the account instantly.',
+ 1850000000,'from, 60 kW configuration','in-production',
+ '[{"k":"Output","v":"60 - 150 kW DC"},{"k":"Footprint","v":"300 mm depth"},{"k":"Guns","v":"Dual CCS2, managed cable"},{"k":"Protocol","v":"OCPP 1.6J, ISO 15118 ready"},{"k":"Payment","v":"App, card, RFID"}]',80),
+('ena-pops','ENA POPS','portable','Portable outdoor power station, rented by the day',
+ 'Sealed, weatherproof and rented by the day. The unit arms itself on release and settles itself on return — no attendant, no argument, no paperwork. Every POPS carries its own expiry, so time is the meter.',
+ 125000000,'capex per unit; rental from N3,500/day','available',
+ '[{"k":"Usable energy","v":"2.4 kWh"},{"k":"Outputs","v":"2 x 220 V, 4 x USB-C PD, 12 V DC"},{"k":"Rental clock","v":"24 h, self-arming on release"},{"k":"Ingress","v":"IP54, weatherproof lid"},{"k":"Swap","v":"90 s pack exchange at kiosk"}]',90);
+
+INSERT INTO "product_updates" ("product_id","title","body","kind","published") VALUES
+((SELECT id FROM products WHERE slug='ena-dc-pedestal'),'DC Pedestal enters production',
+ 'The 60 kW configuration has cleared bench and thermal testing and is now in production, with the first forecourt units going to partner sites in Lagos and Abuja. The 150 kW variant follows next quarter.','release',true),
+((SELECT id FROM products WHERE slug='ena-solar-roof-tile'),'Tile Rev 6 released to manufacturing',
+ 'Rev 6 moves the junction box inboard and ships with pre-terminated leads, cutting roof-side wiring time by about a third. It has completed the full test sequence including the oven and a season outdoors.','release',true),
+((SELECT id FROM products WHERE slug='ena-li-360'),'Three operating modes now shipping',
+ 'Backup, self-consumption and time-of-use scheduling are live in the app for all LI 360 units. Existing installations receive the mode selector over the air, with no site visit required.','release',true),
+((SELECT id FROM products WHERE slug='ena-smart-meter-1p'),'Offline vending queue extended to 14 days',
+ 'Purchases made against an offline meter now hold for fourteen days rather than seven before expiring back to the wallet. The backup token is still issued at the time of purchase either way.','notice',true);
+
+INSERT INTO "stock_items" ("sku","product_id","name","warehouse","quantity","reorder_level","unit_cost_kobo") VALUES
+('MTR-1P-STS',(SELECT id FROM products WHERE slug='ena-smart-meter-1p'),'ENA Smart Meter 1P','lagos-hub',1840,400,5900000),
+('MTR-3P-STS',(SELECT id FROM products WHERE slug='ena-smart-meter-3p'),'ENA Smart Meter 3P','lagos-hub',420,120,11800000),
+('TILE-R6',(SELECT id FROM products WHERE slug='ena-solar-roof-tile'),'ENA Solar Roof Tile Rev 6','lagos-hub',26400,6000,2700000),
+('PNL-550',(SELECT id FROM products WHERE slug='ena-panel-550'),'ENA Panel 550','abuja-depot',960,200,13200000),
+('LI360-10',(SELECT id FROM products WHERE slug='ena-li-360'),'ENA LI 360 Home Battery','lagos-hub',148,40,289000000),
+('CAB-40',(SELECT id FROM products WHERE slug='ena-cell-cabinet'),'ENA Cabinet 40','lagos-hub',34,12,940000000),
+('EVC-PLUS',(SELECT id FROM products WHERE slug='ena-plus-charger'),'ENA Plus Wall Charger','lagos-hub',212,60,54000000),
+('EVC-DC60',(SELECT id FROM products WHERE slug='ena-dc-pedestal'),'ENA DC Pedestal 60','lagos-hub',9,6,1420000000),
+('POPS-24',(SELECT id FROM products WHERE slug='ena-pops'),'ENA POPS 2.4','ph-yard',380,100,86000000),
+('POPS-PACK',(SELECT id FROM products WHERE slug='ena-pops'),'ENA POPS swap pack','ph-yard',74,150,31000000);
+
+INSERT INTO "devices" ("name","type","identifier","reading","status") VALUES
+('Ikoyi home meter','meter','4512 8890 231','84.6 kWh','online'),
+('Ikoyi roof array','inverter','INV-LG-0041','3.1 kW','online'),
+('Hallway battery','battery','LI360-00218','41%','online'),
+('Garage charger','charger','PLUS-01044','idle','online'),
+('Yaba kiosk pedestal','charger','DC60-00007','62 kW','online'),
+('Wuse cabinet A','battery','CAB40-00113','78%','online'),
+('Market stall meter','meter','4512 9004 118','12.2 kWh','offline');
