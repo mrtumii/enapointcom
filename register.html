@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register a smart meter — Enapoint</title>
+<meta name="description" content="Sign your prepaid meter up with Enapoint. Enter your meter and account details once, our team verifies them with your distribution company, and you can buy power from anywhere.">
+<meta property="og:title" content="Register a smart meter — Enapoint">
+<meta property="og:description" content="Sign your prepaid meter up with Enapoint. Enter your meter and account details once, our team verifies them with your distribution company, and you can buy power from anywhere.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.enapoint.com/register">
+<meta property="og:image" content="https://www.enapoint.com/assets/img/brand/ena-lockup.png">
+<link rel="canonical" href="https://www.enapoint.com/register">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ena.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+  <header class="site-header">
+    <div class="header-top">
+      <a class="brand" href="/" aria-label="Enapoint home">
+        <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+        <span>ENAPOINT</span>
+      </a>
+      <div class="header-actions">
+        <a class="pill hide-sm" href="/register">Register a meter</a>
+        <button class="icon-btn" data-theme-toggle type="button" aria-label="Switch theme">&#9728;</button>
+        <a class="cta" href="/contact">Request a quote</a>
+        <button class="icon-btn nav-toggle" data-nav-toggle type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span aria-hidden="true"></span></button>
+      </div>
+    </div>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/panels">Solar</a>
+        <a href="/cells">Storage</a>
+        <a href="/ev">EV charging</a>
+        <a href="/meter">Metering</a>
+        <a href="/grid">Mini-grids</a>
+        <a href="/pops">POPS</a>
+        <a href="/lab">Manufacturing</a>
+        <a href="/refi">Impact</a>
+        <a href="/app">ENA Control</a>
+        <a href="/developers">Partners &amp; API</a>
+        <a href="/about">About</a>
+        <a href="/support">Support</a>
+        <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <p class="eyebrow">Smart meter registration</p>
+        <h1>Register your meter with Enapoint</h1>
+        <p class="lede">Enter your meter and account details once. Our team verifies them with your distribution company and confirms by email &mdash; usually within one working day.</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <div class="split align-start" data-register>
+          <div>
+            <form class="card raised" name="meter-registration" method="POST" action="/register" data-netlify="true" netlify-honeypot="bot-field" data-register-form novalidate>
+              <input type="hidden" name="form-name" value="meter-registration">
+              <input type="hidden" name="subject" data-remove-prefix value="New meter registration — enapoint.com">
+              <input type="hidden" name="reference" value="">
+              <p hidden><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+              <fieldset>
+                <legend>Account holder</legend>
+                <div class="field"><label for="r-name">Full name</label><input id="r-name" name="holderName" required autocomplete="name" maxlength="120"></div>
+                <div class="field-row">
+                  <div class="field"><label for="r-email">Email</label><input id="r-email" name="email" type="email" required autocomplete="email" inputmode="email"></div>
+                  <div class="field"><label for="r-phone">Phone</label><input id="r-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="0803 000 0000"></div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>Meter</legend>
+                <div class="field"><label for="r-meter">Meter number</label><input id="r-meter" name="meterNumber" required inputmode="numeric" autocomplete="off" placeholder="e.g. 4512 8890 2310" maxlength="30"><p class="hint">Printed on the meter and on your last token receipt.</p></div>
+                <div class="field-row">
+                  <div class="field"><label for="r-disco">Distribution company</label><select id="r-disco" name="disco" required><option value="" disabled selected>Select your DisCo</option><option value="AEDC">Abuja (AEDC)</option><option value="BEDC">Benin (BEDC)</option><option value="EKEDC">Eko (EKEDC)</option><option value="EEDC">Enugu (EEDC)</option><option value="IBEDC">Ibadan (IBEDC)</option><option value="IKEDC">Ikeja Electric (IKEDC)</option><option value="JED">Jos (JED)</option><option value="KAEDCO">Kaduna (KAEDCO)</option><option value="KEDCO">Kano (KEDCO)</option><option value="PHED">Port Harcourt (PHED)</option><option value="YEDC">Yola (YEDC)</option><option value="Aba Power">Aba Power</option><option value="Mini-grid / private">Mini-grid or private network</option></select></div>
+                  <div class="field"><label for="r-band">Tariff band</label><select id="r-band" name="tariffBand"><option value="A">Band A</option><option value="B">Band B</option><option value="C" selected>Band C</option><option value="D">Band D</option><option value="E">Band E</option></select></div>
+                </div>
+                <div class="field-row">
+                  <div class="field"><label for="r-type">Meter type</label><select id="r-type" name="meterType"><option value="single-phase">Single-phase</option><option value="three-phase">Three-phase</option></select></div>
+                  <div class="field"><label for="r-imei">IMEI or RFID (optional)</label><input id="r-imei" name="imei" autocomplete="off" maxlength="40"></div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>Premises</legend>
+                <div class="field"><label for="r-addr">Address</label><input id="r-addr" name="address" required autocomplete="street-address" maxlength="300" placeholder="12B Gado Nasko Way, Apo"></div>
+                <div class="field"><label for="r-state">State</label><select id="r-state" name="state" required><option value="" disabled selected>Select a state</option><option>Abia</option><option>Adamawa</option><option>Akwa Ibom</option><option>Anambra</option><option>Bauchi</option><option>Bayelsa</option><option>Benue</option><option>Borno</option><option>Cross River</option><option>Delta</option><option>Ebonyi</option><option>Edo</option><option>Ekiti</option><option>Enugu</option><option>FCT Abuja</option><option>Gombe</option><option>Imo</option><option>Jigawa</option><option>Kaduna</option><option>Kano</option><option>Katsina</option><option>Kebbi</option><option>Kogi</option><option>Kwara</option><option>Lagos</option><option>Nasarawa</option><option>Niger</option><option>Ogun</option><option>Ondo</option><option>Osun</option><option>Oyo</option><option>Plateau</option><option>Rivers</option><option>Sokoto</option><option>Taraba</option><option>Yobe</option><option>Zamfara</option></select></div>
+              </fieldset>
+
+              <label class="check"><input type="checkbox" name="consent" value="yes" required> I confirm these details are correct and agree that Enapoint may process them to register and service this meter, in line with the NDPR.</label>
+
+              <button class="btn" type="submit" style="width:100%;margin-top:18px">Register meter</button>
+              <div class="msg" data-msg hidden role="status" aria-live="polite"></div>
+              <p class="note">Details go to our meter register and signup@enapoint.com</p>
+            </form>
+
+            <div class="card raised" data-register-done hidden tabindex="-1">
+              <div class="badge"><span class="dot"></span>Registration received</div>
+              <h2 style="margin-top:18px">Thank you</h2>
+              <p data-register-reply></p>
+              <div class="spec-row"><span class="k">Reference</span><span class="v mono" data-register-ref></span></div>
+              <div class="spec-row"><span class="k">Meter number</span><span class="v mono" data-register-meter></span></div>
+              <div class="flex" style="margin-top:20px"><a class="cta" href="/meter#topup">Buy units</a><a class="pill" href="/">Back to home</a></div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+        <p class="eyebrow">Why register</p>
+              <div style="margin-top:6px"><div class="spec-row"><span class="k">Buy from anywhere</span><span class="v">Web or app, no vending office</span></div><div class="spec-row"><span class="k">Credit goes to the device</span><span class="v">Not to a paper token you can lose</span></div><div class="spec-row"><span class="k">Offline is handled</span><span class="v">Purchases queue for fourteen days</span></div><div class="spec-row"><span class="k">Auto top-up</span><span class="v">Set a kWh floor and forget it</span></div><div class="spec-row"><span class="k">One account</span><span class="v">Meters, roof, battery and chargers together</span></div></div>
+            </div>
+            <div class="card" style="margin-top:20px">
+              <h3>What happens next</h3>
+        <ol class="steps"><li><div><h4>We check the details</h4><p class="small mb0">Your meter number, DisCo and tariff band are confirmed with the network.</p></div></li><li><div><h4>You get an email</h4><p class="small mb0">Confirmation goes to the address you entered, with your reference.</p></div></li><li><div><h4>Start buying units</h4><p class="small mb0">Top up on the web or in ENA Control. Credit goes straight to the meter.</p></div></li></ol>
+            </div>
+            <div class="card" style="margin-top:20px">
+              <h3>Need help?</h3>
+              <p class="small mb0">Email <a href="mailto:signup@enapoint.com">signup@enapoint.com</a> or call <a href="tel:+2348179189600">+234 817 918 9600</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <div class="card">
+          <div class="between">
+            <div><h3 class="mb0">No smart meter yet?</h3><p class="small mb0">ENA supplies and installs single- and three-phase prepaid meters for mini-grids, estates and captive sites.</p></div>
+            <a class="cta" href="/meter">See the meters</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="/" style="margin-bottom:12px" aria-label="Enapoint home">
+            <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+            <span>ENAPOINT</span>
+          </a>
+          <p class="small">Decentralised energy &mdash; solar, storage, power conversion and the software that reports on all three. Abuja, Nigeria &middot; Quincy, Massachusetts.</p>
+          <p class="small mb0"><a href="mailto:info@enapoint.com">info@enapoint.com</a><br><a href="tel:+2348179189600">+234 817 918 9600</a></p>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul><li><a href="/panels">ENA Solar Panels</a></li><li><a href="/panels#slates">ENA Slates</a></li><li><a href="/cells">ENA Powerwall</a></li><li><a href="/cells#lit">ENA LIT LI</a></li><li><a href="/pops">POPS</a></li><li><a href="/ev">EV charging</a></li></ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul><li><a href="/about">About Enapoint</a></li><li><a href="/lab">Manufacturing</a></li><li><a href="/refi">Sustainability &amp; impact</a></li><li><a href="/contact">Contact</a></li></ul>
+        </div>
+        <div>
+          <h4>Partners</h4>
+          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/developers#reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/support">System status</a></li></ul>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <ul><li><a href="/register">Register a meter</a></li><li><a href="/meter#topup">Buy units</a></li><li><a href="/app">Get ENA Control</a></li><li><a href="/support">Support</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>&copy; 2026 Ena Plus Ltd, trading as Enapoint</span>
+        <span class="flex"><a href="/support">Privacy</a><a href="/support">Terms</a><a href="/support">NDPR</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<script src="/assets/js/ena.js"></script>
+
+</body>
+</html>

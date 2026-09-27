@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partners &amp; API — Enapoint</title>
+<meta name="description" content="Connect your bank, DisCo, agency or payment platform to Enapoint: meter registration, vending and payments over a versioned REST API with scoped keys.">
+<meta property="og:title" content="Partners &amp; API — Enapoint">
+<meta property="og:description" content="Connect your bank, DisCo, agency or payment platform to Enapoint: meter registration, vending and payments over a versioned REST API with scoped keys.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.enapoint.com/developers">
+<meta property="og:image" content="https://www.enapoint.com/assets/img/brand/ena-lockup.png">
+<link rel="canonical" href="https://www.enapoint.com/developers">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ena.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+  <header class="site-header">
+    <div class="header-top">
+      <a class="brand" href="/" aria-label="Enapoint home">
+        <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+        <span>ENAPOINT</span>
+      </a>
+      <div class="header-actions">
+        <a class="pill hide-sm" href="/register">Register a meter</a>
+        <button class="icon-btn" data-theme-toggle type="button" aria-label="Switch theme">&#9728;</button>
+        <a class="cta" href="/contact">Request a quote</a>
+        <button class="icon-btn nav-toggle" data-nav-toggle type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span aria-hidden="true"></span></button>
+      </div>
+    </div>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/panels">Solar</a>
+        <a href="/cells">Storage</a>
+        <a href="/ev">EV charging</a>
+        <a href="/meter">Metering</a>
+        <a href="/grid">Mini-grids</a>
+        <a href="/pops">POPS</a>
+        <a href="/lab">Manufacturing</a>
+        <a href="/refi">Impact</a>
+        <a href="/app">ENA Control</a>
+        <a href="/developers" aria-current="page">Partners &amp; API</a>
+        <a href="/about">About</a>
+        <a href="/support">Support</a>
+        <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <p class="eyebrow">Partners &amp; API</p>
+        <h1>Integrate with ENA metering and payments</h1>
+        <p class="lede">A versioned REST API for banks, payment platforms, distribution companies, regulators and government agencies. Register meters, price and settle top-ups, and follow vending &mdash; with scoped keys, JSON everywhere and a request ID on every response.</p>
+        <div class="flex"><a class="cta" href="/contact?topic=partnerships">Request partner access</a><a class="pill" href="#reference">API reference</a><a class="pill" href="/openapi.json">OpenAPI spec</a></div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <h2>Who connects to ENA</h2>
+        <div class="grid g3"><article class="card"><h3>Banks &amp; fintechs</h3><p class="small">Sell units from your app, USSD or branch channels. Quote, initialise and verify top-ups, and receive the backup token in the response.</p></article><article class="card"><h3>Distribution companies</h3><p class="small">Push verified customer meters straight into the register and keep tariff bands and meter status in sync with your records.</p></article><article class="card"><h3>Government &amp; parastatals</h3><p class="small">Read-only keys for programme monitoring: registered meters, vending volumes and platform health, for reporting and oversight.</p></article></div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <div class="split align-start">
+          <div>
+            <h2>How access works</h2>
+        <ol class="steps"><li><div><h4>Request access</h4><p class="small mb0">Tell us your organisation and use case. We agree scopes and issue a test key the same week.</p></div></li><li><div><h4>Build against test</h4><p class="small mb0">Test keys (ena_test_…) never move real money. Every route behaves exactly as it does in production.</p></div></li><li><div><h4>Go live</h4><p class="small mb0">After a short review we issue a live key (ena_live_…). Keys are rotated every 90 days and can be revoked instantly.</p></div></li></ol>
+          </div>
+          <div class="card">
+        <p class="eyebrow">Conventions</p>
+            <div style="margin-top:6px"><div class="spec-row"><span class="k">Base URL</span><span class="v">https://www.enapoint.com/api/v1</span></div><div class="spec-row"><span class="k">Auth</span><span class="v">Authorization: Bearer &lt;key&gt;</span></div><div class="spec-row"><span class="k">Scopes</span><span class="v">read · write</span></div><div class="spec-row"><span class="k">Format</span><span class="v">JSON in, JSON out, UTF-8</span></div><div class="spec-row"><span class="k">Money</span><span class="v">Kobo (integer); energy in milli-kWh</span></div><div class="spec-row"><span class="k">Errors</span><span class="v">HTTP status + { "error": "…" }</span></div><div class="spec-row"><span class="k">Tracing</span><span class="v">x-request-id on every response</span></div><div class="spec-row"><span class="k">CORS</span><span class="v">Enabled for key-authenticated calls</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <h2 id="reference">API reference</h2>
+        <p class="small">Unversioned <span class="mono">/api/&hellip;</span> paths remain available, but new integrations should use <span class="mono">/api/v1</span>. The machine-readable description is at <a href="/openapi.json">/openapi.json</a>.</p>
+        <h3 style="margin-top:28px">Meters</h3>
+        <div class="table-wrap"><table><thead><tr><th>Method</th><th>Path</th><th>Purpose</th><th>Access</th></tr></thead><tbody><tr><td><span class="tag">POST</span></td><td class="mono">/api/v1/meters/register</td><td>Register a customer meter. With a write-scoped key the meter is recorded as verified.</td><td><span class="tag">public / write</span></td></tr><tr><td><span class="tag">POST</span></td><td class="mono">/api/v1/meters/verify</td><td>Check whether a meter number, IMEI or RFID is already registered.</td><td><span class="tag">public</span></td></tr><tr><td><span class="tag">GET</span></td><td class="mono">/api/v1/meters/:number</td><td>Meter status and tariff. Holder details and recent tokens with a key.</td><td><span class="tag">public / read</span></td></tr><tr><td><span class="tag">PATCH</span></td><td class="mono">/api/v1/meters/:number</td><td>Update status (verified, suspended&hellip;), DisCo or tariff.</td><td><span class="tag">write</span></td></tr><tr><td><span class="tag">GET</span></td><td class="mono">/api/v1/meters?status=pending-verification</td><td>List registered meters, filterable by status.</td><td><span class="tag">read</span></td></tr></tbody></table></div>
+        <h3 style="margin-top:28px">Payments &amp; vending</h3>
+        <div class="table-wrap"><table><thead><tr><th>Method</th><th>Path</th><th>Purpose</th><th>Access</th></tr></thead><tbody><tr><td><span class="tag">POST</span></td><td class="mono">/api/v1/payments/quote</td><td>Price a top-up: units, service charge and tariff for an amount.</td><td><span class="tag">public</span></td></tr><tr><td><span class="tag">POST</span></td><td class="mono">/api/v1/payments/initialize</td><td>Create an order and return the checkout URL.</td><td><span class="tag">public</span></td></tr><tr><td><span class="tag">GET</span></td><td class="mono">/api/v1/payments/verify/:reference</td><td>Verify an order, settle it and return the token.</td><td><span class="tag">public</span></td></tr><tr><td><span class="tag">POST</span></td><td class="mono">/api/v1/payments/webhook</td><td>Payment provider callback, signature-verified.</td><td><span class="tag">signed</span></td></tr><tr><td><span class="tag">GET</span></td><td class="mono">/api/v1/vend</td><td>Vending log with queued and delivered tokens.</td><td><span class="tag">read</span></td></tr><tr><td><span class="tag">POST</span></td><td class="mono">/api/v1/vend/flush</td><td>Deliver queued units when a meter reconnects.</td><td><span class="tag">write</span></td></tr></tbody></table></div>
+        <h3 style="margin-top:28px">Catalogue &amp; platform</h3>
+        <div class="table-wrap"><table><thead><tr><th>Method</th><th>Path</th><th>Purpose</th><th>Access</th></tr></thead><tbody><tr><td><span class="tag">GET</span></td><td class="mono">/api/v1/products</td><td>Product catalogue and pricing.</td><td><span class="tag">public</span></td></tr><tr><td><span class="tag">GET</span></td><td class="mono">/api/v1/updates</td><td>Product and firmware notices.</td><td><span class="tag">public</span></td></tr><tr><td><span class="tag">GET</span></td><td class="mono">/api/v1/devices</td><td>Connected devices on the account.</td><td><span class="tag">read</span></td></tr><tr><td><span class="tag">GET</span></td><td class="mono">/api/v1/status</td><td>Platform health.</td><td><span class="tag">public</span></td></tr><tr><td><span class="tag">POST</span></td><td class="mono">/api/v1/contact</td><td>Submit an enquiry to the Enapoint desk.</td><td><span class="tag">public</span></td></tr></tbody></table></div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <div class="grid g2">
+          <div class="card">
+            <p class="tiny">Register a verified meter &middot; partner key</p>
+            <pre class="code">curl -X POST https://www.enapoint.com/api/v1/meters/register \
+  -H 'authorization: Bearer ena_live_…' \
+  -H 'content-type: application/json' \
+  -d '{"meterNumber":"45128890231","holderName":"Amaka Okonkwo",
+       "email":"amaka@example.com","phone":"08030000000",
+       "address":"12B Gado Nasko Way, Apo","state":"FCT Abuja",
+       "disco":"AEDC","tariffBand":"B","meterType":"single-phase"}'</pre>
+          </div>
+          <div class="card">
+            <p class="tiny">Price a top-up</p>
+            <pre class="code">curl -X POST https://www.enapoint.com/api/v1/payments/quote \
+  -H 'content-type: application/json' \
+  -d '{"amountNaira":5000,"meterNumber":"45128890231"}'
+
+{"amountKobo":500000,"serviceChargeKobo":5000,
+ "tariffKoboPerKwh":28500,"unitsKwhMilli":17368}</pre>
+          </div>
+        </div>
+        <div class="grid g2" style="margin-top:20px">
+          <div class="card">
+            <h3>Security</h3>
+            <p class="small mb0">TLS only. Keys are stored as SHA-256 hashes and shown once. Write access is a separate scope. Personal data (names, phones, addresses) is only returned to authenticated callers, and processing follows the NDPR.</p>
+          </div>
+          <div class="card">
+            <h3>Talk to the integrations desk</h3>
+            <p class="small">Email <a href="mailto:info@enapoint.com">info@enapoint.com</a> with your organisation, the integration you have in mind and a technical contact.</p>
+            <a class="pill" href="/contact?topic=partnerships">Request partner access &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="/" style="margin-bottom:12px" aria-label="Enapoint home">
+            <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+            <span>ENAPOINT</span>
+          </a>
+          <p class="small">Decentralised energy &mdash; solar, storage, power conversion and the software that reports on all three. Abuja, Nigeria &middot; Quincy, Massachusetts.</p>
+          <p class="small mb0"><a href="mailto:info@enapoint.com">info@enapoint.com</a><br><a href="tel:+2348179189600">+234 817 918 9600</a></p>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul><li><a href="/panels">ENA Solar Panels</a></li><li><a href="/panels#slates">ENA Slates</a></li><li><a href="/cells">ENA Powerwall</a></li><li><a href="/cells#lit">ENA LIT LI</a></li><li><a href="/pops">POPS</a></li><li><a href="/ev">EV charging</a></li></ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul><li><a href="/about">About Enapoint</a></li><li><a href="/lab">Manufacturing</a></li><li><a href="/refi">Sustainability &amp; impact</a></li><li><a href="/contact">Contact</a></li></ul>
+        </div>
+        <div>
+          <h4>Partners</h4>
+          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/developers#reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/support">System status</a></li></ul>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <ul><li><a href="/register">Register a meter</a></li><li><a href="/meter#topup">Buy units</a></li><li><a href="/app">Get ENA Control</a></li><li><a href="/support">Support</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>&copy; 2026 Ena Plus Ltd, trading as Enapoint</span>
+        <span class="flex"><a href="/support">Privacy</a><a href="/support">Terms</a><a href="/support">NDPR</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<script src="/assets/js/ena.js"></script>
+
+</body>
+</html>

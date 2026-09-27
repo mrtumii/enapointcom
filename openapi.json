@@ -1,0 +1,945 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Enapoint API",
+    "version": "1.0.0",
+    "description": "Meter registration, vending and payments for banks, payment platforms, distribution companies and government agencies. Amounts are in kobo, energy in milli-kWh. Every response carries an x-request-id header. Request partner access at https://www.enapoint.com/developers.",
+    "contact": {
+      "name": "Enapoint integrations",
+      "email": "info@enapoint.com",
+      "url": "https://www.enapoint.com/developers"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://www.enapoint.com/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Meters"
+    },
+    {
+      "name": "Payments"
+    },
+    {
+      "name": "Vending"
+    },
+    {
+      "name": "Catalogue"
+    },
+    {
+      "name": "Platform"
+    }
+  ],
+  "paths": {
+    "/meters/register": {
+      "post": {
+        "summary": "Register a meter",
+        "tags": [
+          "Meters"
+        ],
+        "description": "Without a key the meter is recorded as pending-verification. With a write-scoped partner key it is recorded as verified.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeterRegistration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "registered": {
+                      "type": "boolean"
+                    },
+                    "reference": {
+                      "type": "string",
+                      "example": "ENA-M000123"
+                    },
+                    "meter": {
+                      "$ref": "#/components/schemas/MeterPublic"
+                    },
+                    "reply": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Meter already registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": [
+          {},
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/meters/verify": {
+      "post": {
+        "summary": "Check whether a meter is registered",
+        "tags": [
+          "Meters"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "meterNumber": {
+                    "type": "string"
+                  },
+                  "imei": {
+                    "type": "string"
+                  },
+                  "rfid": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lookup result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "found": {
+                      "type": "boolean"
+                    },
+                    "meter": {
+                      "$ref": "#/components/schemas/MeterPublic"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/meters": {
+      "get": {
+        "summary": "List meters",
+        "tags": [
+          "Meters"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/MeterStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/meters/{number}": {
+      "get": {
+        "summary": "Get a meter",
+        "tags": [
+          "Meters"
+        ],
+        "description": "Public callers receive status and tariff only; authenticated callers also receive holder details and the last ten tokens.",
+        "parameters": [
+          {
+            "name": "number",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Meter number (spaces and dashes are ignored)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": [
+          {},
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update a meter",
+        "tags": [
+          "Meters"
+        ],
+        "parameters": [
+          {
+            "name": "number",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Meter number (spaces and dashes are ignored)"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "$ref": "#/components/schemas/MeterStatus"
+                  },
+                  "disco": {
+                    "type": "string"
+                  },
+                  "tariffBand": {
+                    "type": "string",
+                    "enum": [
+                      "A",
+                      "B",
+                      "C",
+                      "D",
+                      "E"
+                    ]
+                  },
+                  "tariffKoboPerKwh": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/payments/quote": {
+      "post": {
+        "summary": "Price a top-up",
+        "tags": [
+          "Payments"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amountNaira": {
+                    "type": "number"
+                  },
+                  "amountKobo": {
+                    "type": "integer"
+                  },
+                  "meterNumber": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Quote",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quote"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/payments/initialize": {
+      "post": {
+        "summary": "Create an order and checkout",
+        "tags": [
+          "Payments"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "meterNumber": {
+                    "type": "string"
+                  },
+                  "amountNaira": {
+                    "type": "number"
+                  },
+                  "amountKobo": {
+                    "type": "integer"
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "default": "meter-topup"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "reference": {
+                      "type": "string"
+                    },
+                    "authorizationUrl": {
+                      "type": "string"
+                    },
+                    "quote": {
+                      "$ref": "#/components/schemas/Quote"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/payments/verify/{reference}": {
+      "get": {
+        "summary": "Verify and settle an order",
+        "tags": [
+          "Payments"
+        ],
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/payments/webhook": {
+      "post": {
+        "summary": "Payment provider callback",
+        "tags": [
+          "Payments"
+        ],
+        "description": "Signature-verified against the raw body. Settlement is idempotent.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/vend": {
+      "get": {
+        "summary": "Vending log",
+        "tags": [
+          "Vending"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/vend/flush": {
+      "post": {
+        "summary": "Deliver queued units",
+        "tags": [
+          "Vending"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "meterNumber"
+                ],
+                "properties": {
+                  "meterNumber": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "List products",
+        "tags": [
+          "Catalogue"
+        ],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/updates": {
+      "get": {
+        "summary": "List product updates",
+        "tags": [
+          "Catalogue"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/devices": {
+      "get": {
+        "summary": "Connected devices",
+        "tags": [
+          "Platform"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/status": {
+      "get": {
+        "summary": "Platform health",
+        "tags": [
+          "Platform"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/contact": {
+      "post": {
+        "summary": "Send an enquiry",
+        "tags": [
+          "Platform"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email"
+                ],
+                "properties": {
+                  "topic": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "company": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "ena_test_… or ena_live_… key issued by Enapoint. Scopes: read, write."
+      }
+    },
+    "responses": {
+      "Error": {
+        "description": "Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          }
+        }
+      },
+      "MeterStatus": {
+        "type": "string",
+        "enum": [
+          "pending-verification",
+          "verified",
+          "linked",
+          "rejected",
+          "suspended"
+        ]
+      },
+      "MeterRegistration": {
+        "type": "object",
+        "required": [
+          "meterNumber",
+          "holderName",
+          "email",
+          "phone",
+          "address",
+          "disco"
+        ],
+        "properties": {
+          "meterNumber": {
+            "type": "string",
+            "description": "6–20 digits; spaces and dashes are ignored"
+          },
+          "holderName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "disco": {
+            "type": "string",
+            "enum": [
+              "AEDC",
+              "BEDC",
+              "EKEDC",
+              "EEDC",
+              "IBEDC",
+              "IKEDC",
+              "JED",
+              "KAEDCO",
+              "KEDCO",
+              "PHED",
+              "YEDC",
+              "Aba Power",
+              "Mini-grid / private"
+            ]
+          },
+          "tariffBand": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E"
+            ],
+            "default": "C"
+          },
+          "meterType": {
+            "type": "string",
+            "enum": [
+              "single-phase",
+              "three-phase"
+            ],
+            "default": "single-phase"
+          },
+          "imei": {
+            "type": "string"
+          },
+          "rfid": {
+            "type": "string"
+          },
+          "tariffKoboPerKwh": {
+            "type": "integer"
+          },
+          "autoTopupFloorKwh": {
+            "type": "integer",
+            "default": 20
+          }
+        }
+      },
+      "MeterPublic": {
+        "type": "object",
+        "properties": {
+          "meterNumber": {
+            "type": "string"
+          },
+          "disco": {
+            "type": "string"
+          },
+          "tariffBand": {
+            "type": "string"
+          },
+          "tariffKoboPerKwh": {
+            "type": "integer"
+          },
+          "meterType": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MeterStatus"
+          }
+        }
+      },
+      "Quote": {
+        "type": "object",
+        "properties": {
+          "amountKobo": {
+            "type": "integer"
+          },
+          "serviceChargeKobo": {
+            "type": "integer"
+          },
+          "tariffKoboPerKwh": {
+            "type": "integer"
+          },
+          "unitsKwhMilli": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

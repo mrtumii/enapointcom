@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Developer console — Enapoint</title>
+<meta name="description" content="Enapoint operator console: product updates, stock uploads, devices, payments and API keys.">
+<meta property="og:title" content="Developer console — Enapoint">
+<meta property="og:description" content="Enapoint operator console: product updates, stock uploads, devices, payments and API keys.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.enapoint.com/dashboard">
+<meta property="og:image" content="https://www.enapoint.com/assets/img/brand/ena-lockup.png">
+<link rel="canonical" href="https://www.enapoint.com/dashboard">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ena.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+  <header class="site-header">
+    <div class="header-top">
+      <a class="brand" href="/" aria-label="Enapoint home">
+        <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+        <span>ENAPOINT</span>
+      </a>
+      <div class="header-actions">
+        <a class="pill hide-sm" href="/register">Register a meter</a>
+        <button class="icon-btn" data-theme-toggle type="button" aria-label="Switch theme">&#9728;</button>
+        <a class="cta" href="/contact">Request a quote</a>
+        <button class="icon-btn nav-toggle" data-nav-toggle type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span aria-hidden="true"></span></button>
+      </div>
+    </div>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/panels">Solar</a>
+        <a href="/cells">Storage</a>
+        <a href="/ev">EV charging</a>
+        <a href="/meter">Metering</a>
+        <a href="/grid">Mini-grids</a>
+        <a href="/pops">POPS</a>
+        <a href="/lab">Manufacturing</a>
+        <a href="/refi">Impact</a>
+        <a href="/app">ENA Control</a>
+        <a href="/developers">Partners &amp; API</a>
+        <a href="/about">About</a>
+        <a href="/support">Support</a>
+        <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <div data-gate>
+        <p class="eyebrow">Developer console</p>
+          <h1>Sign in to the console</h1>
+          <p class="lede">Product updates, stock uploads, connected devices, payments and API keys.</p>
+          <form class="card raised" style="max-width:420px">
+            <div class="field"><label for="pw">Console password</label><input id="pw" name="password" type="password" required autocomplete="current-password"></div>
+            <button class="btn" type="submit" style="width:100%">Sign in</button>
+            <div class="msg" data-msg hidden></div>
+            <p class="note">Enapoint staff only</p>
+          </form>
+          <div class="card raised" style="max-width:420px" data-unconfigured hidden>
+            <div class="msg bad">This console is closed.</div>
+            <p class="small">No <b>ENA_ADMIN_PASSWORD</b> is configured for this project, so there is no password that can sign you in. Set that environment variable in Netlify &mdash; and <b>ENA_SESSION_SECRET</b> alongside it &mdash; then reload this page.</p>
+          </div>
+
+        <div data-app hidden>
+          <div class="between" style="margin-bottom:26px">
+            <div>
+        <p class="eyebrow">Developer console</p>
+              <h1 class="mb0">ENA APIs &amp; operations</h1>
+            </div>
+            <div class="flex">
+              <span data-provider></span>
+              <button class="pill" type="button" data-sign-out>Sign out</button>
+            </div>
+          </div>
+
+          <div class="console-layout">
+            <nav class="console-nav" aria-label="Console sections">
+              <button type="button" data-tab="overview" aria-selected="true">Overview</button>
+              <button type="button" data-tab="meters" aria-selected="false">Meter signups</button>
+              <button type="button" data-tab="enquiries" aria-selected="false">Enquiries</button>
+              <button type="button" data-tab="products" aria-selected="false">Products</button>
+              <button type="button" data-tab="updates" aria-selected="false">Product updates</button>
+              <button type="button" data-tab="stock" aria-selected="false">Stock</button>
+              <button type="button" data-tab="devices" aria-selected="false">Devices</button>
+              <button type="button" data-tab="apis" aria-selected="false">APIs</button>
+              <button type="button" data-tab="keys" aria-selected="false">API keys</button>
+            </nav>
+
+            <div>
+              <div class="panel" data-panel="overview">
+                <div class="grid g4" data-kpis></div>
+                <div class="grid g2" style="margin-top:24px">
+                  <div class="card">
+                    <p class="tiny">Vending activity &middot; last 24 h</p>
+                    <div class="spark" data-traffic></div>
+                  </div>
+                  <div class="card">
+                    <p class="tiny">Below reorder level</p>
+                    <div data-low-stock></div>
+                  </div>
+                </div>
+                <h2 style="margin:34px 0 14px">Recent payments</h2>
+                <div class="table-wrap"><table><thead><tr><th>Reference</th><th>Meter</th><th class="num">Amount</th><th class="num">Units</th><th>Status</th><th>Created</th></tr></thead><tbody data-recent-orders></tbody></table></div>
+                <h2 style="margin:34px 0 14px">Recent vending events</h2>
+                <div class="table-wrap"><table><thead><tr><th>Meter</th><th class="num">Units</th><th>Delivery</th><th>Created</th></tr></thead><tbody data-recent-vends></tbody></table></div>
+              </div>
+
+              <div class="panel" data-panel="meters" hidden>
+                <div class="between"><h2 class="mb0">Meter signups</h2>
+                  <select data-meter-filter style="width:auto"><option value="pending-verification">Pending verification</option><option value="verified">Verified</option><option value="rejected">Rejected</option><option value="">All meters</option></select>
+                </div>
+                <p class="small">Registrations from the website arrive here and in signup@enapoint.com. Check the details with the DisCo, then verify or reject.</p>
+                <div class="table-wrap" style="margin-top:18px"><table><thead><tr><th>Meter</th><th>Holder</th><th>Network</th><th>Premises</th><th>Source</th><th>Status</th><th>Received</th><th>Actions</th></tr></thead><tbody data-meter-list></tbody></table></div>
+              </div>
+
+              <div class="panel" data-panel="enquiries" hidden>
+                <h2>Enquiries</h2>
+                <p class="small">Contact-form messages and mini-grid design requests. Each one is also emailed to info@enapoint.com.</p>
+                <div class="table-wrap" style="margin-top:18px"><table><thead><tr><th>Received</th><th>Topic</th><th>From</th><th>Message</th></tr></thead><tbody data-enquiry-list></tbody></table></div>
+              </div>
+
+              <div class="panel" data-panel="products" hidden>
+                <h2>Catalogue</h2>
+                <p class="small">These rows are what the public product pages and the app read.</p>
+                <div class="table-wrap" style="margin:18px 0 30px"><table><thead><tr><th>Product</th><th>Category</th><th class="num">Price</th><th>Status</th><th>Actions</th></tr></thead><tbody data-product-list></tbody></table></div>
+                <form class="card raised" data-product-form>
+                  <div class="between"><h3 class="mb0" data-form-mode>New product</h3><button class="btn ghost tiny-btn" type="button" data-reset-product>Clear</button></div>
+                  <input type="hidden" name="slug">
+                  <div class="field-row" style="margin-top:18px">
+                    <div class="field"><label for="p-name">Name</label><input id="p-name" name="name" required></div>
+                    <div class="field"><label for="p-cat">Category</label><input id="p-cat" name="category" required placeholder="solar / storage / conversion / portable / ev / systems / metering / software"></div>
+                  </div>
+                  <div class="field"><label for="p-tag">Tagline</label><input id="p-tag" name="tagline"></div>
+                  <div class="field"><label for="p-desc">Description</label><textarea id="p-desc" name="description"></textarea></div>
+                  <div class="field-row">
+                    <div class="field"><label for="p-price">Price (&#8358;)</label><input id="p-price" name="priceNaira" type="number" min="0" step="0.01"></div>
+                    <div class="field"><label for="p-note">Price note</label><input id="p-note" name="priceNote" placeholder="installed, per meter"></div>
+                    <div class="field"><label for="p-status">Status</label><select id="p-status" name="status"><option value="available">available</option><option value="in-production">in-production</option><option value="pre-order">pre-order</option><option value="discontinued">discontinued</option></select></div>
+                  </div>
+                  <button class="btn" type="submit">Save product</button>
+                  <div class="msg" data-msg hidden></div>
+                </form>
+              </div>
+
+              <div class="panel" data-panel="updates" hidden>
+                <h2>Publish a product update</h2>
+                <p class="small">Published updates appear on the home page, the products page and in the app.</p>
+                <form class="card raised" data-update-form style="margin:18px 0 30px">
+                  <div class="field-row">
+                    <div class="field"><label for="u-product">Product</label><select id="u-product" name="product"></select></div>
+                    <div class="field"><label for="u-kind">Kind</label><select id="u-kind" name="kind"><option value="release">release</option><option value="notice">notice</option><option value="firmware">firmware</option><option value="pricing">pricing</option></select></div>
+                  </div>
+                  <div class="field"><label for="u-title">Title</label><input id="u-title" name="title" required></div>
+                  <div class="field"><label for="u-body">Body</label><textarea id="u-body" name="body"></textarea></div>
+                  <label class="flex" style="text-transform:none;letter-spacing:0;font-family:inherit;font-size:13.5px;color:var(--body)">
+                    <input type="checkbox" name="published" checked style="width:auto"> Publish immediately
+                  </label>
+                  <button class="btn" type="submit" style="margin-top:16px">Publish update</button>
+                  <div class="msg" data-msg hidden></div>
+                </form>
+                <h2>Published updates</h2>
+                <div class="grid g2" data-update-list style="margin-top:16px"></div>
+              </div>
+
+              <div class="panel" data-panel="stock" hidden>
+                <h2>Stock</h2>
+                <div class="grid g3" data-stock-summary style="margin:18px 0"></div>
+                <div class="card raised">
+                  <h3>Upload a stock CSV</h3>
+                  <p class="small">Columns: <span class="mono">sku, name, quantity, warehouse, reorder_level, unit_cost_naira, product</span>. Unknown SKUs are created, known ones are updated. The raw file is retained.</p>
+                  <div class="flex" style="margin:14px 0">
+                    <label class="flex" style="text-transform:none;letter-spacing:0;font-family:inherit;font-size:13.5px;color:var(--body)"><input type="radio" name="uploadMode" value="set" checked style="width:auto"> Set quantities</label>
+                    <label class="flex" style="text-transform:none;letter-spacing:0;font-family:inherit;font-size:13.5px;color:var(--body)"><input type="radio" name="uploadMode" value="add" style="width:auto"> Add to quantities</label>
+                    <a class="pill" href="/api/stock/upload">Download template</a>
+                  </div>
+                  <div class="drop" data-drop>Drop a CSV here, or click to choose a file</div>
+                  <input type="file" accept=".csv,text/csv" data-file hidden>
+                  <div class="msg" data-upload-msg hidden></div>
+                </div>
+                <h2 style="margin:34px 0 14px">On hand</h2>
+                <div class="table-wrap"><table><thead><tr><th>SKU</th><th>Name</th><th>Warehouse</th><th class="num">Qty</th><th class="num">Reorder</th><th class="num">Unit cost</th><th>State</th><th>Adjust</th></tr></thead><tbody data-stock-list></tbody></table></div>
+                <h2 style="margin:34px 0 14px">Upload history</h2>
+                <div class="table-wrap"><table><thead><tr><th>File</th><th class="num">Rows</th><th class="num">Applied</th><th class="num">Failed</th><th>Status</th><th>When</th></tr></thead><tbody data-upload-history></tbody></table></div>
+              </div>
+
+              <div class="panel" data-panel="devices" hidden>
+                <div class="between"><h2 class="mb0">Connected devices</h2><span class="tag" data-device-summary></span></div>
+                <p class="small">Meters, chargers, inverters and battery cabinets on this account.</p>
+                <div class="table-wrap" style="margin-top:18px"><table><thead><tr><th>Device</th><th>Type</th><th>Identifier</th><th>Reading</th><th>Link</th></tr></thead><tbody data-device-list></tbody></table></div>
+              </div>
+
+              <div class="panel" data-panel="apis" hidden>
+                <h2>REST endpoints</h2>
+                <p class="small">Bearer tokens on write routes, idempotent settlement, and a signed webhook for the payment provider.</p>
+                <div class="table-wrap" style="margin:18px 0 30px"><table><thead><tr><th>Method</th><th>Path</th><th>Purpose</th><th>Access</th></tr></thead><tbody data-endpoint-list></tbody></table></div>
+                <div class="grid g2">
+                  <div class="card">
+                    <p class="tiny">Example &middot; price a top-up</p>
+                    <pre class="secret" style="white-space:pre-wrap">curl -X POST https://www.enapoint.com/api/payments/quote \
+  -H 'content-type: application/json' \
+  -d '{"amountNaira":5000,"meterNumber":"4512 8890 231"}'</pre>
+                  </div>
+                  <div class="card">
+                    <p class="tiny">Example &middot; publish an update</p>
+                    <pre class="secret" style="white-space:pre-wrap">curl -X POST https://www.enapoint.com/api/updates \
+  -H 'authorization: Bearer ena_live_...' \
+  -H 'content-type: application/json' \
+  -d '{"product":"ena-lit-li","title":"New firmware"}'</pre>
+                  </div>
+                </div>
+                <div class="card" style="margin-top:20px">
+                  <h3>Webhooks</h3>
+                  <p class="small mb0">Point your payment provider at <span class="mono">/api/payments/webhook</span>. The signature is verified against the raw body before anything is trusted, and settlement is idempotent, so redelivery is safe.</p>
+                </div>
+              </div>
+
+              <div class="panel" data-panel="keys" hidden>
+                <h2>API keys</h2>
+                <p class="small">Rotate live keys every 90 days. Test keys never touch real money. Only a hash is stored, so a key is shown once and never again.</p>
+                <form class="card raised" data-key-form style="margin:18px 0 24px">
+                  <div class="field-row">
+                    <div class="field"><label for="k-label">Label</label><input id="k-label" name="label" required placeholder="Billing integration"></div>
+                    <div class="field"><label for="k-mode">Mode</label><select id="k-mode" name="mode"><option value="test">test</option><option value="live">live</option></select></div>
+                  </div>
+                  <label class="flex" style="text-transform:none;letter-spacing:0;font-family:inherit;font-size:13.5px;color:var(--body)">
+                    <input type="checkbox" name="write" style="width:auto"> Allow writes (register verified meters, settle vending, manage products and stock)
+                  </label>
+                  <button class="btn" type="submit" style="margin-top:16px">Generate key</button>
+                  <div class="msg" data-msg hidden></div>
+                </form>
+                <div class="card" data-new-key hidden style="margin-bottom:24px"></div>
+                <div class="table-wrap"><table><thead><tr><th>Label</th><th>Mode</th><th>Prefix</th><th>Scopes</th><th>Last used</th><th>Actions</th></tr></thead><tbody data-key-list></tbody></table></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="/" style="margin-bottom:12px" aria-label="Enapoint home">
+            <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+            <span>ENAPOINT</span>
+          </a>
+          <p class="small">Decentralised energy &mdash; solar, storage, power conversion and the software that reports on all three. Abuja, Nigeria &middot; Quincy, Massachusetts.</p>
+          <p class="small mb0"><a href="mailto:info@enapoint.com">info@enapoint.com</a><br><a href="tel:+2348179189600">+234 817 918 9600</a></p>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul><li><a href="/panels">ENA Solar Panels</a></li><li><a href="/panels#slates">ENA Slates</a></li><li><a href="/cells">ENA Powerwall</a></li><li><a href="/cells#lit">ENA LIT LI</a></li><li><a href="/pops">POPS</a></li><li><a href="/ev">EV charging</a></li></ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul><li><a href="/about">About Enapoint</a></li><li><a href="/lab">Manufacturing</a></li><li><a href="/refi">Sustainability &amp; impact</a></li><li><a href="/contact">Contact</a></li></ul>
+        </div>
+        <div>
+          <h4>Partners</h4>
+          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/developers#reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/support">System status</a></li></ul>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <ul><li><a href="/register">Register a meter</a></li><li><a href="/meter#topup">Buy units</a></li><li><a href="/app">Get ENA Control</a></li><li><a href="/support">Support</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>&copy; 2026 Ena Plus Ltd, trading as Enapoint</span>
+        <span class="flex"><a href="/support">Privacy</a><a href="/support">Terms</a><a href="/support">NDPR</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<script src="/assets/js/ena.js"></script>
+<script src="/assets/js/console.js"></script>
+</body>
+</html>

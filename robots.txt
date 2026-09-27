@@ -1,0 +1,10 @@
+# Enapoint — https://www.enapoint.com
+User-agent: *
+Allow: /
+
+# The developer console and payment callbacks are not for crawlers.
+Disallow: /dashboard
+Disallow: /console
+Disallow: /pay/
+
+Sitemap: https://www.enapoint.com/sitemap.xml
