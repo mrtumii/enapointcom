@@ -1,7 +1,16 @@
 import type { Config } from "@netlify/functions";
+import { guard } from "../lib/auth.mts";
 import { db, fail, isEmail, json, readBody, reference, text } from "../lib/http.mts";
 
 export default async (req: Request) => {
+  // Partners calling with a write key have already checked the meter with the DisCo,
+  // so their registrations are verified straight away. Website signups wait for review.
+  let trusted = false;
+  if (req.headers.get("authorization")) {
+    const actor = await guard(req, "write");
+    if (actor instanceof Response) return actor;
+    trusted = true;
+  }
   const body = await readBody(req);
   if (!body) return fail("Please fill in the form and try again.");
   if (text(body._hp)) return fail("We couldn't register that meter. Please try again.");
@@ -23,14 +32,15 @@ export default async (req: Request) => {
   if (existing) return fail("This meter is already registered. If you think that's wrong, email signup@enapoint.com.", 409);
 
   const [meter] = await sql<{ meter_number: string; status: string }>`
-    INSERT INTO meters (meter_number, imei, holder_name, address, disco, tariff_band, phone, email, meter_type, state, status, source)
+    INSERT INTO meters (meter_number, imei, holder_name, address, disco, tariff_band, phone, email, meter_type, state, status, source, verified_at)
     VALUES (${meterNumber}, ${text(body.imei, 40) || null}, ${holderName}, ${text(body.address, 300)}, ${text(body.disco, 60)},
-            ${band}, ${phone}, ${email}, ${meterType}, ${text(body.state, 60)}, 'pending-verification', 'website')
+            ${band}, ${phone}, ${email}, ${meterType}, ${text(body.state, 60)},
+            ${trusted ? "verified" : "pending-verification"}, ${trusted ? "api" : "website"}, CASE WHEN ${trusted}::boolean THEN now() END)
     RETURNING meter_number, status`;
 
   return json({
     reference: reference("MTR"),
-    reply: "Your meter is registered. We verify it with your distribution company within two working days and email you when it's done.",
+    reply: trusted ? "Meter registered and verified." : "Your meter is registered. We verify it with your distribution company within two working days and email you when it's done.",
     meter: { meterNumber: meter.meter_number, status: meter.status },
   }, 201);
 };

@@ -1,9 +1,24 @@
 import type { Config } from "@netlify/functions";
+import { guardAdmin } from "../lib/auth.mts";
 import { db, fail, isEmail, json, looksAutomated, readBody, text } from "../lib/http.mts";
 
 const TOPICS = new Set(["sales", "installation", "partnerships", "operators", "api", "support", "lab", "government", "banking", "general"]);
 
+type MessageRow = { created_at: string; topic: string; name: string; company: string; email: string; phone: string; message: string };
+
+// Staff read messages in the console; they're personal data, so API keys can't.
+async function list(req: Request) {
+  const denied = guardAdmin(req);
+  if (denied) return denied;
+  const rows = await db().sql<MessageRow>`
+    SELECT created_at, topic, name, company, email, phone, message FROM contact_messages ORDER BY created_at DESC LIMIT 200`;
+  return json({
+    messages: rows.map((m) => ({ createdAt: m.created_at, topic: m.topic, name: m.name, company: m.company, email: m.email, phone: m.phone, message: m.message })),
+  });
+}
+
 export default async (req: Request) => {
+  if (req.method === "GET") return list(req);
   const body = await readBody(req);
   if (!body) return fail("Please fill in the form and try again.");
   // Automated submissions get the same reply as real ones, but nothing is stored.
@@ -24,4 +39,4 @@ export default async (req: Request) => {
   return json({ ok: true, reply }, 201);
 };
 
-export const config: Config = { path: ["/api/contact", "/api/v1/contact"], method: "POST" };
+export const config: Config = { path: ["/api/contact", "/api/v1/contact"], method: ["GET", "POST"] };

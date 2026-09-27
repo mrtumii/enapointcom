@@ -39,8 +39,8 @@ export function looksAutomated(body: Record<string, unknown>): boolean {
   return Number.isFinite(elapsed) && elapsed < 1500;
 }
 
-export function reference(prefix: string): string {
+export function reference(prefix: string, length = 6): string {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  const bytes = crypto.getRandomValues(new Uint8Array(6));
+  const bytes = crypto.getRandomValues(new Uint8Array(length));
   return prefix + "-" + Array.from(bytes, (b) => alphabet[b % alphabet.length]).join("");
 }
