@@ -3,6 +3,7 @@ import { createHmac } from "node:crypto";
 import { sameSecret } from "../lib/auth.mts";
 import { db, fail, json } from "../lib/http.mts";
 import { logEvent, paystackSecret, settle, type OrderRow } from "../lib/payments.mts";
+import { settleReservation, type ReservationRow } from "../lib/founding50.mts";
 
 // Paystack signs the raw body with HMAC-SHA512 using the secret key. Nothing in the
 // body is trusted until that signature checks out.
@@ -25,6 +26,16 @@ export default async (req: Request) => {
   const ref = String(data.reference || "").slice(0, 40);
   const [order] = ref ? await db().sql<OrderRow>`SELECT * FROM orders WHERE reference = ${ref} LIMIT 1` : [];
   await logEvent(order ?? null, "paystack", `webhook:${event.event || "unknown"}`, { id: data.id, status: data.status, amount: data.amount });
+
+  // Founding 50 reservations use F50- references and live in their own table.
+  if (!order && ref.startsWith("F50-")) {
+    const [r] = await db().sql<ReservationRow>`SELECT * FROM founding50_reservations WHERE reference = ${ref} LIMIT 1`;
+    if (event.event === "charge.success" && r) {
+      if (Number(data.amount) === Number(r.amount_minor) && data.currency === "NGN") await settleReservation(r.id, String(data.id));
+      else await logEvent(null, "paystack", "founding50-amount-mismatch", { reference: ref, expected: Number(r.amount_minor), received: data.amount });
+    }
+    return json({ received: true });
+  }
 
   if (event.event === "charge.success" && order) {
     if (Number(data.amount) === order.amount_kobo && data.currency === "NGN") {

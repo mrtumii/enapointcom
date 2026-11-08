@@ -1,0 +1,58 @@
+{
+  "_readme": "Founding 50 prices, plans and counter. The page and the checkout both read this file, so the price shown is always the price charged. Amounts are whole currency units. reservedOffline counts sales confirmed outside online checkout (e.g. bank transfers you have matched); paid online reservations are counted automatically.",
+  "totalSystems": 50,
+  "nairaPrice": 7350000,
+  "nairaPlans": [
+    {
+      "id": "outright",
+      "name": "Outright purchase",
+      "percent": 100,
+      "note": "Pay in full now. Install in the first Founding 50 batch."
+    },
+    {
+      "id": "preorder",
+      "name": "Founding pre-order",
+      "percent": 50,
+      "note": "50% deposit now, balance at installation."
+    },
+    {
+      "id": "lease",
+      "name": "Lease-to-own",
+      "percent": 30,
+      "note": "30% deposit now, then a 24-month plan agreed at signing."
+    }
+  ],
+  "diasporaPrice": {
+    "USD": null,
+    "GBP": null
+  },
+  "diasporaPlans": [
+    {
+      "id": "full",
+      "name": "Power Your Family Home: full payment",
+      "percent": 100,
+      "note": "Pay in full from abroad. We install at your family's home in Nigeria."
+    },
+    {
+      "id": "reserve",
+      "name": "Power Your Family Home: reservation",
+      "percent": 50,
+      "note": "50% now to hold your place, balance before installation."
+    }
+  ],
+  "installWindow": "6 to 8 weeks after your reservation",
+  "refundPolicy": "If ENA Plus cannot install your system within the agreed window, you may choose a full refund of your payment.",
+  "bank": {
+    "bankName": "Alternative Bank (Alt Bank)",
+    "accountName": "Ena Plus Ltd",
+    "accountNumber": "0511341725"
+  },
+  "contact": {
+    "phone": "+234 817 918 9600",
+    "phoneUS": "+1 515 723 9517",
+    "whatsapp": "2348179189600",
+    "email": "sales@enapoint.com",
+    "address": "Eterna Station, 641 Samuel Jereton Mariere Road, Apo Gudu, Abuja"
+  },
+  "reservedOffline": 0
+}
