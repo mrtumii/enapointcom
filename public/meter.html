@@ -93,12 +93,18 @@
             </form>
           </div>
           <div>
-            <div class="card">
-              <p class="tiny">Example connection</p>
-              <div style="margin:14px 0"><div class="spec-row"><span class="k">Meter number</span><span class="v">4512 8890 231</span></div><div class="spec-row"><span class="k">Network</span><span class="v">ENA mini-grid · Apo, Abuja</span></div><div class="spec-row"><span class="k">Connection</span><span class="v">Single phase, residential</span></div><div class="spec-row"><span class="k">Tariff</span><span class="v">Set by the network operator</span></div></div>
-              <div class="readout"><b>84.6</b><span>kWh on the meter</span></div>
-              <div class="bar" style="margin-top:12px"><i style="width:56%"></i></div>
-              <p class="note">Illustrative values &middot; your own meter shows live data</p>
+            <div class="card" id="live" data-live>
+              <p class="tiny">Live meter reading</p>
+              <form data-live-form style="margin:12px 0 0">
+                <div class="field"><label for="lv-meter">Meter number</label>
+                  <div class="flex"><input id="lv-meter" name="meter" placeholder="4512 8890 231" autocomplete="off" required style="flex:1"><button class="btn" type="submit">Check</button></div>
+                </div>
+              </form>
+              <div data-live-out>
+                <div class="readout"><b>&mdash;</b><span>kWh on the meter</span></div>
+                <div class="bar" style="margin-top:12px"><i style="width:0%"></i></div>
+                <p class="note">Enter your meter number to see what it last reported</p>
+              </div>
             </div>
             <div class="card" style="margin-top:20px">
 <div class="spec-row"><span class="k">Phase options</span><span class="v">Single and three phase</span></div><div class="spec-row"><span class="k">Comms</span><span class="v">NB-IoT with GPRS fallback</span></div><div class="spec-row"><span class="k">Vending</span><span class="v">Token plus direct push to the device</span></div><div class="spec-row"><span class="k">Accuracy</span><span class="v">Class 1</span></div><div class="spec-row"><span class="k">Offline queue</span><span class="v">14 days</span></div>
@@ -159,6 +165,7 @@
 
 </div>
 <script src="/assets/js/ena.js?v=20260927b"></script>
+<script src="/assets/js/meter-live.js?v=20261112"></script>
 
 </body>
 </html>
