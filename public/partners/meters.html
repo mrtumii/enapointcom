@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meter integration — Enapoint</title>
+<meta name="description" content="How ENA Plus prepaid meters report live readings and alarms through the Acrel IoT EMS, and how partners read and control them through the ENA API.">
+<meta property="og:title" content="Meter integration — Enapoint">
+<meta property="og:description" content="How ENA Plus prepaid meters report live readings and alarms through the Acrel IoT EMS, and how partners read and control them through the ENA API.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.enapoint.com/partners/meters">
+<meta property="og:image" content="https://www.enapoint.com/assets/img/brand/ena-lockup.png">
+<link rel="canonical" href="https://www.enapoint.com/partners/meters">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ena.css?v=20260927b">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+  <header class="site-header">
+    <div class="header-top">
+      <a class="brand" href="/" aria-label="Enapoint home">
+        <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+        <span>ENAPOINT</span>
+      </a>
+      <div class="header-actions">
+        <a class="pill hide-sm" href="/register">Register a meter</a>
+        <button class="icon-btn" data-theme-toggle type="button" aria-label="Switch theme">&#9728;</button>
+        <a class="cta" href="/contact">Request a quote</a>
+        <button class="icon-btn nav-toggle" data-nav-toggle type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span aria-hidden="true"></span></button>
+      </div>
+    </div>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/panels">Solar</a>
+        <a href="/cells">Storage</a>
+        <a href="/ev">EV charging</a>
+        <a href="/meter">Metering</a>
+        <a href="/grid">Mini-grids</a>
+        <a href="/pops">POPS</a>
+        <a href="/lab">Manufacturing</a>
+        <a href="/refi">Impact</a>
+        <a href="/app">ENA Control</a>
+        <a href="/developers" aria-current="page">Partners &amp; API</a>
+        <a href="/about">About</a>
+        <a href="/support">Support</a>
+        <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <a class="back-link" href="/partners/reference">&larr; API reference</a>
+        <p class="eyebrow" style="margin-top:18px">Meter integration</p>
+        <h1>Prepaid meter data &amp; control</h1>
+        <p class="lede">ENA Plus prepaid meters report to an on-site Acrel gateway, which forwards to the Acrel IoT EMS cloud (<span class="mono">iot.acrel-eem.com</span>). Readings and alarms flow into ENA, and ENA switches, refreshes and tops up meters back through Acrel&rsquo;s prepayment API.</p>
+<pre class="code" style="margin-top:22px">Meters ─Modbus/LoRa─▶ Acrel gateway ─▶ Acrel IoT EMS ──Data Forwarding──▶ ENA  (HTTPS or MQTT)
+                                              ▲                                │ stores readings + alarms
+                                              └──── /basic/prepayment ◀────────┤ switch · refresh · top-up
+                                                                               ▼
+                                         /meter page · staff console · partner API (/api/v1)</pre>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <h2>1 &middot; Inbound: Acrel Data Forwarding</h2>
+        <p>Configure one of two delivery routes on the Acrel forwarding rule. Both accept the same payloads and are stored identically.</p>
+        <h3 style="margin-top:24px">Option A &mdash; HTTPS push (recommended)</h3>
+        <div class="table-wrap"><table><thead><tr><th>Setting</th><th>Value</th></tr></thead><tbody><tr><td>URL</td><td><span class="mono">https://www.enapoint.com/api/v1/acrel/ingest</span></td></tr><tr><td>Method</td><td>POST, JSON body</td></tr><tr><td>Auth</td><td><span class="mono">Authorization: Bearer ena_live_…</span> (write scope), or append <span class="mono">?key=ena_live_…</span> if the forwarder can&rsquo;t set headers</td></tr><tr><td>Response</td><td><span class="mono">{ "success": "1", "readings": n, "events": n }</span></td></tr></tbody></table></div>
+        <h3 style="margin-top:24px">Option B &mdash; MQTT broker</h3>
+        <p class="small">ENA reads the broker once a minute using a persistent session (client id <span class="mono">ena-netlify-drain</span>, clean session off, QoS&nbsp;1), so the broker must retain queued messages for offline sessions &mdash; standard on Mosquitto, EMQX and HiveMQ.</p>
+        <div class="table-wrap"><table><thead><tr><th>Setting</th><th>Value (example)</th><th>Notes</th></tr></thead><tbody><tr><td>Host / port</td><td><span class="mono">mqtts://mqtt.enapoint.com:8883</span></td><td>TLS strongly recommended</td></tr><tr><td>Username / password</td><td><span class="mono">acrel-forwarder</span> / •••••</td><td>Dedicated credential for the forwarder</td></tr><tr><td>QoS</td><td>1</td><td>At-least-once, per Acrel spec</td></tr><tr><td>Real-time topic</td><td><span class="mono">ena/acrel/meter/realtime</span></td><td>Array of meter readings</td></tr><tr><td>Event topic</td><td><span class="mono">ena/acrel/meter/event</span></td><td>Alarm / event objects</td></tr></tbody></table></div>
+        <p class="small">Payloads are shape-detected, so a message on the &ldquo;wrong&rdquo; topic is still parsed: a reading has <span class="mono">meterSn</span> plus electrical fields, an event has a <span class="mono">list[]</span>.</p>
+        <div class="split align-start" style="margin-top:22px">
+          <div><h3>Real-time reading</h3>
+<pre class="code">[{
+  "meterSn": "12207013690004",
+  "meterNo": "12207013690004_12207013690004",
+  "gatewaySn": "12207013690004",
+  "state": "ONLINE",        // ONLINE | OFFLINE
+  "source": "REALTIME",     // REALTIME | HISTORY
+  "createTime": "2026-11-12 09:15:00",
+  "Ua": 230.1, "Ia": 1.2, "P": 0.27,
+  "PF": 0.98, "EPI": 1234.5,
+  "BasePowRema": 84.6
+}]</pre></div>
+          <div><h3>Event / alarm</h3>
+<pre class="code">{
+  "createTime": "2026-11-12 09:16:00",
+  "meterSn": "T001032",
+  "gatewaySn": "70100001001",
+  "list": [{
+    "code": "UHIGH1", "level": "1",
+    "message": { "en_US": "Overvoltage warning" },
+    "origInfo": { "settingValue": "110.0",
+      "currentValue": { "Ua": "242.00" } }
+  }]
+}</pre></div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <h2>2 &middot; ENA meter API</h2>
+        <p class="small">Same base URL and keys as the rest of the <a href="/partners/reference">partner API</a>. A meter is addressed by its ENA meter number or its Acrel serial; link the two with <span class="mono">PATCH /api/v1/meters/:number</span> and <span class="mono">{ "acrelMeterSn", "acrelGatewaySn" }</span> when they differ.</p>
+        <div class="table-wrap"><table><thead><tr><th>Method</th><th>Path</th><th>Purpose</th><th>Access</th></tr></thead><tbody><tr><td><span class="tag">GET</span></td><td><span class="mono">/api/v1/meters/:number/live</span></td><td>Latest snapshot. Public: online state, remaining kWh, load and energy. With a key: gateway and every labelled metric.</td><td><span class="tag">public / read</span></td></tr><tr><td><span class="tag">GET</span></td><td><span class="mono">/api/v1/meters/:number/readings?limit=100</span></td><td>Recent readings, newest first (kept 90 days).</td><td><span class="tag">read</span></td></tr><tr><td><span class="tag">GET</span></td><td><span class="mono">/api/v1/meters/:number/events?limit=100</span></td><td>Alarms for one meter.</td><td><span class="tag">read</span></td></tr><tr><td><span class="tag">POST</span></td><td><span class="mono">/api/v1/meters/:number/control</span></td><td>Remote control. Body <span class="mono">{ action, amount?, gatewaySn? }</span>; action is <span class="mono">on</span>, <span class="mono">off</span>, <span class="mono">force-on</span>, <span class="mono">force-off</span>, <span class="mono">refresh</span>, <span class="mono">maintenance-start</span>, <span class="mono">maintenance-end</span> or <span class="mono">topup</span> (with <span class="mono">amount</span>). Every command is logged.</td><td><span class="tag">write</span></td></tr><tr><td><span class="tag">GET</span></td><td><span class="mono">/api/v1/telemetry</span></td><td>Every reporting meter with fleet counts (online, offline, alarms in 24 h).</td><td><span class="tag">read</span></td></tr><tr><td><span class="tag">GET</span></td><td><span class="mono">/api/v1/telemetry/events?meter=&amp;limit=100</span></td><td>Alarms across the fleet.</td><td><span class="tag">read</span></td></tr><tr><td><span class="tag">POST</span></td><td><span class="mono">/api/v1/acrel/ingest</span></td><td>Acrel Data Forwarding receiver (see above).</td><td><span class="tag">write</span></td></tr></tbody></table></div>
+        <p class="small">A meter is reported online only when its last message said <span class="mono">ONLINE</span> and arrived in the past 30 minutes.</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <h2>3 &middot; Outbound: Acrel prepayment control</h2>
+        <p class="small">ENA signs in to <span class="mono">/basic/prepayment/auth_user/login</span> with an AES-128-CBC (zero padding, Base64) encrypted credential, caches the token, and posts commands to <span class="mono">/entry/home/control</span> with a <span class="mono">token</span> header, re-signing in once on a token error.</p>
+        <div class="table-wrap"><table><thead><tr><th>Action</th><th>Acrel method</th><th>Value</th></tr></thead><tbody><tr><td><span class="mono">on</span> / <span class="mono">off</span></td><td><span class="mono">SWITCH</span></td><td><span class="mono">{"Switch":"1"}</span> / <span class="mono">"0"</span></td></tr><tr><td><span class="mono">force-on</span> / <span class="mono">force-off</span></td><td><span class="mono">FORCESWITCH</span></td><td><span class="mono">{"ForceSwitch":"1"}</span> / <span class="mono">"0"</span></td></tr><tr><td><span class="mono">refresh</span></td><td><span class="mono">REFRESH</span></td><td><span class="mono">{}</span></td></tr><tr><td><span class="mono">maintenance-start</span> / <span class="mono">-end</span></td><td><span class="mono">RLYREP</span></td><td><span class="mono">{"RlyRep":"1"}</span> / <span class="mono">"0"</span></td></tr><tr><td><span class="mono">topup</span></td><td>Tenant-specific (default <span class="mono">SETPARAM</span>)</td><td><span class="mono">{"SaleMoney":"&lt;amount&gt;"}</span></td></tr></tbody></table></div>
+        <p class="small">The top-up method name varies by Acrel tenant; confirm it in the sandbox. Error 5006 means the purchase amount was rejected.</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <div class="split align-start">
+          <div>
+            <h2>Data dictionary</h2>
+            <div class="table-wrap"><table><thead><tr><th>Key</th><th>Meaning</th><th>Unit</th></tr></thead><tbody><tr><td><span class="mono">Ua / Ub / Uc</span></td><td>Phase voltages L1–L3</td><td>V</td></tr><tr><td><span class="mono">Ia / Ib / Ic</span></td><td>Phase currents L1–L3</td><td>A</td></tr><tr><td><span class="mono">Pa / Pb / Pc / P</span></td><td>Active power per phase / total</td><td>kW</td></tr><tr><td><span class="mono">PF</span></td><td>Power factor</td><td>—</td></tr><tr><td><span class="mono">EPI</span></td><td>Import (consumed) energy</td><td>kWh</td></tr><tr><td><span class="mono">BasePowRema</span></td><td>Remaining prepaid units</td><td>kWh</td></tr><tr><td><span class="mono">SaleMoney</span></td><td>Last purchase amount</td><td>—</td></tr><tr><td><span class="mono">OweMoney</span></td><td>Amount owed</td><td>—</td></tr><tr><td><span class="mono">state</span></td><td>Device link state</td><td>ONLINE / OFFLINE</td></tr></tbody></table></div>
+            <p class="small">Any other Acrel field (U1–U16, harmonics, temperatures, leakage…) is stored unchanged.</p>
+          </div>
+          <div>
+            <h2>Acrel error codes</h2>
+            <div class="table-wrap"><table><thead><tr><th>Code</th><th>Meaning</th></tr></thead><tbody><tr><td>1002</td><td>Parameter is empty</td></tr><tr><td>2052</td><td>Device not connected to MQTT server</td></tr><tr><td>2050 / 2051</td><td>Command delivery failed / timed out</td></tr><tr><td>4153 / 4155</td><td>Failed to send / connect to MQTT</td></tr><tr><td>5006</td><td>Number of electricity purchases is incorrect</td></tr><tr><td>10004 / 10005 / 10006</td><td>Token missing / timeout / error &mdash; re-login</td></tr><tr><td>4904</td><td>Gateway offline</td></tr></tbody></table></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="/" style="margin-bottom:12px" aria-label="Enapoint home">
+            <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+            <span>ENAPOINT</span>
+          </a>
+          <p class="small">Decentralised energy &mdash; solar, storage, power conversion and the software that reports on all three. Abuja, Nigeria &middot; Quincy, Massachusetts.</p>
+          <p class="small mb0"><a href="mailto:info@enapoint.com">info@enapoint.com</a><br><a href="tel:+2348179189600">+234 817 918 9600</a></p>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul><li><a href="/panels">ENA Solar Panels</a></li><li><a href="/panels#slates">ENA Slates</a></li><li><a href="/cells">ENA Powerwall</a></li><li><a href="/cells#lit">ENA LIT LI</a></li><li><a href="/pops">POPS</a></li><li><a href="/ev">EV charging</a></li></ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul><li><a href="/about">About Enapoint</a></li><li><a href="/lab">Manufacturing</a></li><li><a href="/refi">Sustainability &amp; impact</a></li><li><a href="/contact">Contact</a></li></ul>
+        </div>
+        <div>
+          <h4>Partners</h4>
+          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/partners/setup">Integration setup</a></li><li><a href="/partners/reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/support">System status</a></li></ul>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <ul><li><a href="/register">Register a meter</a></li><li><a href="/meter#topup">Buy units</a></li><li><a href="/app">Get ENA Control</a></li><li><a href="/support">Support</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>&copy; 2026 Ena Plus Ltd, trading as Enapoint</span>
+        <span class="flex"><a href="/support">Privacy</a><a href="/support">Terms</a><a href="/support">NDPR</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<script src="/assets/js/ena.js?v=20260927b"></script>
+
+</body>
+</html>

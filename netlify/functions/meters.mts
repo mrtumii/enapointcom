@@ -7,6 +7,7 @@ type MeterRow = {
   meter_number: string; imei: string | null; rfid: string | null; holder_name: string; email: string; phone: string;
   disco: string; tariff_band: string; tariff_kobo_per_kwh: number; meter_type: string; address: string; state: string;
   source: string; status: string; balance_kwh_milli: number; registered_at: string; verified_at: string | null;
+  acrel_meter_sn: string | null; acrel_gateway_sn: string | null;
 };
 
 const STATUSES = new Set(["pending-verification", "verified", "linked", "rejected", "suspended"]);
@@ -16,6 +17,7 @@ const shape = (m: MeterRow) => ({
   disco: m.disco, tariffBand: m.tariff_band, tariffKoboPerKwh: m.tariff_kobo_per_kwh, meterType: m.meter_type,
   address: m.address, state: m.state, source: m.source, status: m.status, balanceKwhMilli: m.balance_kwh_milli,
   registeredAt: m.registered_at, verifiedAt: m.verified_at,
+  acrelMeterSn: m.acrel_meter_sn, acrelGatewaySn: m.acrel_gateway_sn,
 });
 
 export default async (req: Request, context: Context) => {
@@ -71,6 +73,7 @@ export default async (req: Request, context: Context) => {
   const [row] = await sql<MeterRow>`
     UPDATE meters SET status = ${status}, tariff_band = ${band}, tariff_kobo_per_kwh = ${tariff},
       disco = ${pick("disco", current.disco, 60) ?? ""}, imei = ${pick("imei", current.imei, 40)}, rfid = ${pick("rfid", current.rfid, 40)},
+      acrel_meter_sn = ${pick("acrelMeterSn", current.acrel_meter_sn, 64)}, acrel_gateway_sn = ${pick("acrelGatewaySn", current.acrel_gateway_sn, 64)},
       verified_at = CASE WHEN ${status}::text IN ('verified', 'linked') THEN COALESCE(verified_at, now()) ELSE verified_at END
     WHERE meter_number = ${number} RETURNING *`;
   return json({ meter: shape(row) });
