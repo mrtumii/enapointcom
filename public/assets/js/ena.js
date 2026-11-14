@@ -536,13 +536,98 @@
     });
   }
 
+
+  /* ----------------------------------------------------------------- toast */
+
+  var toastTimer;
+  function toast(message) {
+    var t = document.getElementById("ena-toast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "ena-toast"; t.className = "toast"; t.setAttribute("role", "status"); t.setAttribute("aria-live", "polite");
+      document.body.appendChild(t);
+    }
+    t.textContent = message;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove("show"); }, 3200);
+  }
+
+  /* ------------------------------------------------------------ web push */
+
+  // The bell in the header subscribes the browser to ENA alerts. The service
+  // worker lives at /sw.js so its scope covers the whole site; the server hands
+  // out its VAPID public key and stores the subscription.
+  function b64ToBytes(b64) {
+    var pad = "=".repeat((4 - (b64.length % 4)) % 4);
+    var raw = atob((b64 + pad).replace(/-/g, "+").replace(/_/g, "/"));
+    var out = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+    return out;
+  }
+
+  function initPush() {
+    var buttons = document.querySelectorAll("[data-push-toggle]");
+    if (!buttons.length) return;
+    if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) return;
+    function mark(on) {
+      buttons.forEach(function (b) {
+        b.setAttribute("aria-pressed", String(on));
+        b.setAttribute("aria-label", on ? "ENA alerts are on" : "Get ENA alerts");
+        b.title = on ? "ENA alerts are on" : "Get ENA alerts";
+      });
+    }
+    buttons.forEach(function (b) { b.hidden = false; });
+    navigator.serviceWorker.getRegistration("/").then(function (reg) {
+      return reg ? reg.pushManager.getSubscription() : null;
+    }).then(function (sub) { mark(Boolean(sub)); }).catch(function () {});
+
+    async function enable() {
+      try {
+        var perm = await Notification.requestPermission();
+        if (perm !== "granted") { toast("Allow notifications in your browser settings to get ENA alerts."); return; }
+        var reg = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+        await navigator.serviceWorker.ready;
+        var existing = await reg.pushManager.getSubscription();
+        var sub = existing;
+        if (!sub) {
+          var key = await api("/api/push/key");
+          sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(key.publicKey) });
+        }
+        await api("/api/push/subscribe", { method: "POST", body: { subscription: sub.toJSON(), page: location.pathname } });
+        mark(true);
+        toast("You're subscribed to ENA alerts.");
+      } catch (e) {
+        toast(e && e.status ? e.message : "Couldn't turn on notifications in this browser.");
+      }
+    }
+    async function disable() {
+      try {
+        var reg = await navigator.serviceWorker.getRegistration("/");
+        var sub = reg && (await reg.pushManager.getSubscription());
+        if (sub) {
+          await api("/api/push/subscribe", { method: "DELETE", body: { endpoint: sub.endpoint } }).catch(function () {});
+          await sub.unsubscribe();
+        }
+        mark(false);
+        toast("ENA alerts are off.");
+      } catch (e) { toast("Couldn't change notifications in this browser."); }
+    }
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (b.getAttribute("aria-pressed") === "true") disable(); else enable();
+      });
+    });
+  }
+
   /* -------------------------------------------------------------- bootstrap */
 
-  window.ENA = { api: api, naira: naira, kwh: kwh, when: when, escapeHtml: escapeHtml, setMessage: setMessage };
+  window.ENA = { api: api, naira: naira, kwh: kwh, when: when, escapeHtml: escapeHtml, setMessage: setMessage, toast: toast, sendToInbox: sendToInbox };
 
   document.addEventListener("DOMContentLoaded", function () {
     initTheme();
     initNav();
+    initPush();
     initStatus();
     initProducts();
     initSalesEnquiry();

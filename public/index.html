@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Enapoint — decentralised energy, built where it is used</title>
-<meta name="description" content="ENA designs and manufactures the generation, storage and power-conversion layer for decentralised energy: solar panels and building-integrated PV, lithium storage, hybrid inverters, portable power stations and the ENA Control platform that reports on all of it.">
-<meta property="og:title" content="Enapoint — decentralised energy, built where it is used">
-<meta property="og:description" content="ENA designs and manufactures the generation, storage and power-conversion layer for decentralised energy: solar panels and building-integrated PV, lithium storage, hybrid inverters, portable power stations and the ENA Control platform that reports on all of it.">
+<title>Enapoint — everything between the sun and the socket</title>
+<meta name="description" content="Solar, storage, inverters, metering and mini-grids from one brand — engineered for Nigeria&#x27;s grid and owned on easy monthly payments with Summit Bank and The Alternative Bank.">
+<meta property="og:title" content="Enapoint — everything between the sun and the socket">
+<meta property="og:description" content="Solar, storage, inverters, metering and mini-grids from one brand — engineered for Nigeria&#x27;s grid and owned on easy monthly payments with Summit Bank and The Alternative Bank.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.enapoint.com/">
 <meta property="og:image" content="https://www.enapoint.com/assets/img/brand/ena-lockup.png">
@@ -16,8 +16,9 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/ena.css?v=20260927b">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ena.css?v=20261114">
+<link rel="stylesheet" href="/assets/css/ena-v2.css?v=20261114">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -31,8 +32,9 @@
       </a>
       <div class="header-actions">
         <a class="pill hide-sm" href="/register">Register a meter</a>
+        <button class="icon-btn" data-push-toggle type="button" aria-pressed="false" aria-label="Get ENA alerts" title="Get ENA alerts" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
         <button class="icon-btn" data-theme-toggle type="button" aria-label="Switch theme">&#9728;</button>
-        <a class="cta" href="/contact">Request a quote</a>
+        <a class="cta" href="/advisor">Get a recommendation</a>
         <button class="icon-btn nav-toggle" data-nav-toggle type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span aria-hidden="true"></span></button>
       </div>
     </div>
@@ -40,6 +42,8 @@
         <a href="/" aria-current="page">Home</a>
         <a href="/founding50">Founding 50</a>
         <a href="/products">Products</a>
+        <a href="/pay-monthly">Pay monthly</a>
+        <a href="/advisor">AI Advisor</a>
         <a href="/panels">Solar</a>
         <a href="/cells">Storage</a>
         <a href="/ev">EV charging</a>
@@ -57,20 +61,103 @@
   </header>
 
   <main id="main">
+    <section class="hero2">
+      <div class="wrap">
+        <div class="rise">
+          <p class="eyebrow">Decentralised energy &middot; built where it's used</p>
+          <h1>Everything between the sun and the socket.</h1>
+          <p class="lede">Solar, storage, inverters, metering and mini-grids from one brand &mdash; engineered for Nigeria's grid and owned on easy monthly payments.</p>
+          <div class="hero-cta">
+            <a class="cta cta-lg" href="/advisor">Size my system &rarr;</a>
+            <a class="btn-light" href="/products">Explore the range</a>
+          </div>
+          <a class="hero-f50" href="/founding50"><b>New</b> Founding 50 &mdash; 24-hour solar power for 50 homes. Reserve yours &rarr;</a>
+          <div class="hero-stats">
+            <div class="s"><span class="n">5&ndash;25 kWh</span><span class="l">ENA Powerwall storage, stackable</span></div>
+            <div class="s"><span class="n">1&ndash;50 kVA</span><span class="l">Hybrid inverters with MPPT</span></div>
+            <div class="s"><span class="n">34 mo</span><span class="l">Pay-monthly, bank-financed</span></div>
+          </div>
+        </div>
+        <figure class="hero-art">
+          <img src="/assets/img/photo/house.jpg" alt="A home roofed with ENA solar slates, overlooking the water" width="1400" height="775">
+          <div class="chips" aria-hidden="true">
+            <span>ENA Slates &middot; <b>roof that generates</b></span>
+            <span>ENA Control &middot; <b>live</b></span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <div class="strip">
+      <div class="wrap">
+        <div class="item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> In-house LiFePO4 cells &amp; BMS</div>
+        <div class="item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Manufactured and assembled in Nigeria</div>
+        <div class="item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg> 5-yr battery &amp; inverter warranty</div>
+        <div class="item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg> Financed by Summit Bank &amp; The Alternative Bank</div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">The range</p>
+          <h2>One platform, built for more than one grid</h2>
+          <p>Every product shares the same cells, controllers and ENA Control software &mdash; so a home kit and an industrial block speak the same language.</p>
+        </div>
+        <div class="pgrid">
+          <a class="pcard" href="/panels"><span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 4 4M19 19l1 1M19 5l1-1M5 19l-1 1"/></svg></span><h3>Solar modules</h3><p>Monocrystalline &amp; bifacial panels from 400 Wp to 700 Wp+ for rooftop, ground-mount and utility arrays.</p><span class="ptags"><span class="ptag">Rooftop</span><span class="ptag">Bifacial</span><span class="ptag">Utility</span></span></a>
+          <a class="pcard" href="/panels#slates"><span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7M5 10v10h14V10M9 20v-6h6v6"/></svg></span><h3>ENA Slates &amp; Cladding</h3><p>BIPV solar roofing slates and fa&ccedil;ade, curtain-wall and spandrel cladding that generate as they cover.</p><span class="ptags"><span class="ptag">BIPV</span><span class="ptag">Fa&ccedil;ade</span><span class="ptag">Roofing</span></span></a>
+          <a class="pcard" href="/cells"><span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="16" height="12" rx="2"/><path d="M22 11v4M7 7V5h6v2"/></svg></span><h3>ENA Powerwall</h3><p>Stackable LiFePO4 storage from 5 to 25 kWh for homes, plus cabinet blocks for commercial and industrial sites.</p><span class="ptags"><span class="ptag">5&ndash;25 kWh</span><span class="ptag">Stackable</span><span class="ptag">Smart BMS</span></span></a>
+          <a class="pcard" href="/cells#lit"><span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><h3>ENA LIT LI</h3><p>Wall-mounted LiFePO4 unit with a touchscreen and CAN/RS485 link straight to the inverter.</p><span class="ptags"><span class="ptag">Wall-mount</span><span class="ptag">Touchscreen</span><span class="ptag">CAN/RS485</span></span></a>
+          <a class="pcard" href="/cells#conversion"><span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 10-13h-7l1-7Z"/></svg></span><h3>Hybrid inverters</h3><p>Pure-sine hybrid inverters from 1 to 50+ kVA with matching MPPT charge controllers.</p><span class="ptags"><span class="ptag">1&ndash;50 kVA</span><span class="ptag">MPPT</span><span class="ptag">Pure sine</span></span></a>
+          <a class="pcard" href="/pops"><span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5V8ZM3 8l9 5 9-5M12 13v8"/></svg></span><h3>POPS portable power</h3><p>Sealed, solar-chargeable outdoor power stations from 300 W to 3 kW and up to 4 kWh.</p><span class="ptags"><span class="ptag">300 W&ndash;3 kW</span><span class="ptag">Portable</span><span class="ptag">Solar-charge</span></span></a>
+          <a class="pcard" href="/ev"><span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="13" height="11" rx="2"/><path d="M16 11h2l3 3v4h-5M7 7V4h5v3"/></svg></span><h3>EV charging</h3><p>AC and DC chargers specified alongside storage, so vehicles charge off your own solar.</p><span class="ptags"><span class="ptag">AC &amp; DC</span><span class="ptag">Solar-fed</span></span></a>
+          <a class="pcard" href="/grid"><span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><h3>Mini-grids &amp; captive power</h3><p>Controllers, energy management, transfer switching and distribution for campuses and industrial clusters.</p><span class="ptags"><span class="ptag">Mini-grid</span><span class="ptag">EMS</span><span class="ptag">ATS</span></span></a>
+          <a class="pcard" href="/meter"><span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v10H3zM3 11h18M7 15h4"/></svg></span><h3>Prepaid metering</h3><p>Register an ENA Plus prepaid meter and buy units online; balances and alarms stream into ENA Control live.</p><span class="ptags"><span class="ptag">Register</span><span class="ptag">Buy units</span><span class="ptag">Live reading</span></span></a>
+        </div>
+        <p style="margin-top:22px"><a class="pill" href="/products">See the full catalogue &rarr;</a> <a class="pill" href="/app">ENA Control &rarr;</a></p>
+      </div>
+    </section>
+
     <section class="section">
       <div class="wrap">
         <div class="split">
-          <div class="rise">
-            <div class="badge"><span class="dot"></span>Abuja &middot; Quincy MA &middot; Doha</div>
-            <h1 style="margin-top:20px">Decentralised energy, built where it is used.</h1>
-            <p class="lede">ENA designs and manufactures the layer that makes power local: solar panels and building-integrated PV, lithium storage, hybrid inverters and portable power stations &mdash; with ENA Control reporting every kilowatt-hour they move.</p>
-            <div class="flex"><a class="cta" href="/products">Explore the range</a><a class="pill" href="/grid">Talk about a project</a></div>
-            <p style="margin-top:18px"><a class="pill" href="/founding50">New: Founding 50 &mdash; 24-hour solar power for 50 homes. Reserve yours &rarr;</a></p>
+          <figure class="photo"><img src="/assets/img/photo/installer.jpg" alt="An ENA engineer fitting a solar roof" width="1000" height="1333" loading="lazy"></figure>
+          <div>
+            <p class="eyebrow">Installed &amp; backed by ENA</p>
+            <h2>Certified installation, real after-sales</h2>
+            <p class="lede">Our own trained engineers mount, wire and commission every system &mdash; then stand behind it with a 5-year battery &amp; inverter warranty and live service through ENA Control.</p>
+            <div class="badges"><span class="b2 orange">Pro installation</span><span class="b2 green">5-yr warranty</span><span class="b2 gold">Live monitoring</span></div>
+            <p style="margin-top:22px"><a class="cta" href="/contact">Book a site survey</a></p>
           </div>
-        <figure class="visual" style="margin:0"><img src="/assets/img/product/portable-hero.webp" alt="An ENA portable outdoor power station on open ground at sunrise, flanked by two banks of ENA solar panels" width="720" height="361" loading="lazy"></figure>
         </div>
       </div>
     </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="band">
+          <div>
+            <p class="eyebrow">Buy now &middot; pay small small</p>
+            <h2>Own your power on easy monthly payments</h2>
+            <p>Choose a deposit and spread the rest, or finance the whole system &mdash; salary-friendly plans with our banking partners, for homes, businesses and civil servants.</p>
+            <div class="partners"><span class="lbl">Financed by</span><span class="bk">Summit Bank</span><span class="bk">The Alternative Bank</span></div>
+          </div>
+          <div>
+            <div class="tiers">
+              <div class="tier"><div class="pct">30%</div><div class="lbl">deposit</div></div>
+              <div class="tier"><div class="pct">40%</div><div class="lbl">deposit</div></div>
+              <div class="tier"><div class="pct">50%</div><div class="lbl">deposit</div></div>
+            </div>
+            <div class="hero-cta" style="margin-top:18px">
+              <a class="cta cta-lg" href="/pay-monthly">Open payment planner</a>
+              <a class="btn-light" href="/advisor">Not sure what you need?</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <div class="wrap">
         <p class="eyebrow">Why decentralised</p>
@@ -80,42 +167,22 @@
         <p class="tiny" style="margin-top:18px">Roadmap figures are ENA's own build targets, not installed capacity.</p>
       </div>
     </section>
-    <section class="section">
-      <div class="wrap">
-        <div class="between" style="margin-bottom:26px">
-          <div>
-        <p class="eyebrow">The range</p>
-            <h2 class="mb0">Everything between the sun and the socket</h2>
-          </div>
-          <a class="pill" href="/products">All products &rarr;</a>
-        </div>
-        <div class="grid g3">
-          <a class="card" href="/panels"><span class="tag">Solar</span><h3 style="margin-top:14px">ENA Solar Panels</h3><p class="small mb0">Monocrystalline and bifacial modules from 400 Wp to over 700 Wp, for rooftop, ground-mount and utility arrays.</p></a>
-          <a class="card" href="/panels#slates"><span class="tag">BIPV</span><h3 style="margin-top:14px">ENA Slates &amp; Cladding</h3><p class="small mb0">Solar roofing slates and façade, curtain-wall and spandrel cladding &mdash; the building envelope as the array.</p></a>
-          <a class="card" href="/cells"><span class="tag">Storage</span><h3 style="margin-top:14px">ENA Powerwall</h3><p class="small mb0">Stackable LiFePO4 from 5 kWh to 25 kWh for homes, and cabinet blocks for commercial and industrial sites.</p></a>
-          <a class="card" href="/cells#lit"><span class="tag">Storage</span><h3 style="margin-top:14px">ENA LIT LI</h3><p class="small mb0">The wall-mounted LiFePO4 unit &mdash; touchscreen, integrated mounting plate, CAN and RS485 to the inverter.</p></a>
-          <a class="card" href="/cells#conversion"><span class="tag">Conversion</span><h3 style="margin-top:14px">Hybrid inverters &amp; MPPT</h3><p class="small mb0">Hybrid inverters from 1 kVA to 50 kVA and above, with MPPT charge controllers to match.</p></a>
-          <a class="card" href="/pops"><span class="tag">Portable</span><h3 style="margin-top:14px">POPS</h3><p class="small mb0">Portable outdoor power stations from 300 W to 3 kW and up to 4 kWh &mdash; sealed, solar-chargeable, carried by hand.</p></a>
-          <a class="card" href="/ev"><span class="tag">Mobility</span><h3 style="margin-top:14px">EV charging</h3><p class="small mb0">AC and DC charging from Ena Plus, specified alongside storage so a site charges without reinforcing its connection.</p></a>
-          <a class="card" href="/grid"><span class="tag">Systems</span><h3 style="margin-top:14px">Mini-grids &amp; captive power</h3><p class="small mb0">Controllers, EMS, transfer switching and distribution for mini-grids, campuses and industrial clusters.</p></a>
-          <a class="card" href="/app"><span class="tag">Software</span><h3 style="margin-top:14px">ENA Control</h3><p class="small mb0">Live monitoring and management across every ENA asset on the account, with exportable ESG reporting.</p></a>
-        </div>
-      </div>
-    </section>
+
     <section class="section">
       <div class="wrap">
         <p class="eyebrow">Global placement</p>
         <h2>One brand, built for more than one grid</h2>
         <p class="lede">ENA is engineered around a common platform, then certified and specified for the market it ships into &mdash; so the same module, pack and inverter family serves a Nigerian mini-grid, a Gulf rooftop and a North American off-grid cabin.</p>
-        <div class="grid g3"><article class="card"><h3>Nigeria &middot; headquarters</h3><p class="small">Abuja. Design, projects and the local manufacturing programme, serving captive, commercial and residential demand nationwide.</p></article><article class="card"><h3>United States</h3><p class="small">Quincy, Massachusetts. North American supply, portable power distribution and partner engineering.</p></article><article class="card"><h3>Qatar &amp; the Gulf</h3><p class="small">Doha, through ENA Plus. Distributed rooftop solar and storage specified against GSAS and the region's net-billing rules.</p></article><article class="card"><h3>ECOWAS</h3><p class="small">Regional export from Nigerian production, so lead times are measured in weeks rather than shipping seasons.</p></article><article class="card"><h3>United Kingdom</h3><p class="small">Commercial and engineering partnerships supporting the Gulf and African programmes.</p></article><article class="card"><h3>Anywhere thin</h3><p class="small">The range is offline-capable by default. A site with no grid runs the same hardware as a site with a weak one.</p></article></div>
+        <div class="grid g3"><article class="card"><h3>Nigeria &middot; headquarters</h3><p class="small">Abuja. Design, projects and the local manufacturing programme, serving captive, commercial and residential demand nationwide.</p></article><article class="card"><h3>United States</h3><p class="small">Quincy, Massachusetts. North American supply, portable power distribution and partner engineering.</p></article><article class="card"><h3>Qatar &amp; the Gulf</h3><p class="small">Doha, through ENA Plus. Distributed rooftop solar and storage specified against GSAS and the region's net-billing rules.</p></article></div>
       </div>
     </section>
+
     <section class="section">
       <div class="wrap">
         <div class="split">
-        <figure class="visual" style="margin:0"><img src="/assets/img/product/inverter-vehicle.webp" alt="An ENA hybrid inverter and storage unit standing in the load space of a vehicle, ready to be carried to site" width="1275" height="1111" loading="lazy"></figure>
+          <figure class="visual" style="margin:0"><img src="/assets/img/product/inverter-vehicle.webp" alt="An ENA hybrid inverter and storage unit standing in the load space of a vehicle, ready to be carried to site" width="1275" height="1111" loading="lazy"></figure>
           <div>
-        <p class="eyebrow">Manufactured locally</p>
+            <p class="eyebrow">Manufactured locally</p>
             <h2>Weeks to site, not shipping seasons</h2>
             <p>More than nine in ten of the region's panels, batteries and inverters are imported, which puts months of lead time and a currency exposure between a project and its first kilowatt-hour. ENA's manufacturing programme moves module lamination, pack assembly and inverter build onshore &mdash; targeting a one-to-two-week build-to-site for standard configurations.</p>
             <div class="flex"><a class="cta" href="/lab">The manufacturing programme</a><a class="pill" href="/refi">Impact &amp; sustainability &rarr;</a></div>
@@ -123,28 +190,14 @@
         </div>
       </div>
     </section>
+
     <section class="section">
       <div class="wrap">
         <div class="split">
           <div>
-        <p class="eyebrow">Sustainability</p>
-            <h2>Displacement is the measurement</h2>
-            <p>A solar-plus-storage system's real output is not the kilowatt-hours it makes but the diesel and petrol hours it removes, the peak it shaves and the emissions that never happen. ENA Control records all three per asset and exports them in the formats ESG and GSAS reporting actually ask for.</p>
-            <a class="pill" href="/refi">How it is measured &rarr;</a>
-          </div>
-          <div>
-        <div class="grid g3"><div class="stat"><b>Per asset</b><span>generation, displacement and avoided emissions</span></div><div class="stat"><b>GSAS / ESG</b><span>exportable reporting from ENA Control</span></div><div class="stat"><b>Second life</b><span>packs triaged and re-graded into stationary duty</span></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="wrap">
-        <div class="split">
-          <div>
-        <p class="eyebrow">Impact to society</p>
+            <p class="eyebrow">Impact to society</p>
             <h2>A grid connection is a clinic, a classroom and a cold chain</h2>
-            <p>Decentralised power is not only an energy product. The same system that keeps a small factory running keeps vaccines cold, a school lit after dark and a base station on air. ENA's manufacturing roadmap targets 500 or more direct jobs and over 3,000 indirect, in the market that buys the hardware.</p>
+            <p>The same system that keeps a small factory running keeps vaccines cold, a school lit after dark and a base station on air. ENA Control records generation, displacement and avoided emissions per asset and exports them for ESG and GSAS reporting.</p>
             <a class="cta" href="/refi">Read the impact case</a>
           </div>
           <div class="card raised">
@@ -155,6 +208,7 @@
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer">
@@ -178,11 +232,11 @@
         </div>
         <div>
           <h4>Partners</h4>
-          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/partners/setup">Integration setup</a></li><li><a href="/partners/reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/support">System status</a></li></ul>
+          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/partners/setup">Integration setup</a></li><li><a href="/partners/reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/marketing">Marketing console</a></li><li><a href="/support">System status</a></li></ul>
         </div>
         <div>
           <h4>Account</h4>
-          <ul><li><a href="/register">Register a meter</a></li><li><a href="/meter#topup">Buy units</a></li><li><a href="/app">Get ENA Control</a></li><li><a href="/support">Support</a></li></ul>
+          <ul><li><a href="/pay-monthly">Pay-monthly planner</a></li><li><a href="/advisor">AI energy advisor</a></li><li><a href="/register">Register a meter</a></li><li><a href="/meter#topup">Buy units</a></li><li><a href="/app">Get ENA Control</a></li><li><a href="/support">Support</a></li></ul>
         </div>
       </div>
       <div class="footer-base">
@@ -193,7 +247,7 @@
   </footer>
 
 </div>
-<script src="/assets/js/ena.js?v=20260927b"></script>
+<script src="/assets/js/ena.js?v=20261114"></script>
 
 </body>
 </html>

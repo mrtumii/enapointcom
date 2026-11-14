@@ -104,6 +104,25 @@
   status = 404
   force = true
 
+[[headers]]
+  for = "/marketing"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    X-Frame-Options = "DENY"
+    Cache-Control = "no-store"
+
+# The service worker must be re-checked on every visit so updates reach browsers.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Service-Worker-Allowed = "/"
+
+[[redirects]]
+  from = "/pay"
+  to = "/pay-monthly"
+  status = 301
+
 [[redirects]]
   from = "/console"
   to = "/dashboard"

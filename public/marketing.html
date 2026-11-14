@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketing console — Enapoint</title>
+<meta name="description" content="Staff-only console for sending email campaigns and ENA alerts to Enapoint customers.">
+<meta property="og:title" content="Marketing console — Enapoint">
+<meta property="og:description" content="Staff-only console for sending email campaigns and ENA alerts to Enapoint customers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.enapoint.com/marketing">
+<meta property="og:image" content="https://www.enapoint.com/assets/img/brand/ena-lockup.png">
+<link rel="canonical" href="https://www.enapoint.com/marketing">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ena.css?v=20261114">
+<link rel="stylesheet" href="/assets/css/ena-v2.css?v=20261114">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+  <header class="site-header">
+    <div class="header-top">
+      <a class="brand" href="/" aria-label="Enapoint home">
+        <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+        <span>ENAPOINT</span>
+      </a>
+      <div class="header-actions">
+        <a class="pill hide-sm" href="/register">Register a meter</a>
+        <button class="icon-btn" data-push-toggle type="button" aria-pressed="false" aria-label="Get ENA alerts" title="Get ENA alerts" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
+        <button class="icon-btn" data-theme-toggle type="button" aria-label="Switch theme">&#9728;</button>
+        <a class="cta" href="/advisor">Get a recommendation</a>
+        <button class="icon-btn nav-toggle" data-nav-toggle type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span aria-hidden="true"></span></button>
+      </div>
+    </div>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="/">Home</a>
+        <a href="/founding50">Founding 50</a>
+        <a href="/products">Products</a>
+        <a href="/pay-monthly">Pay monthly</a>
+        <a href="/advisor">AI Advisor</a>
+        <a href="/panels">Solar</a>
+        <a href="/cells">Storage</a>
+        <a href="/ev">EV charging</a>
+        <a href="/meter">Metering</a>
+        <a href="/grid">Mini-grids</a>
+        <a href="/pops">POPS</a>
+        <a href="/lab">Manufacturing</a>
+        <a href="/refi">Impact</a>
+        <a href="/app">ENA Control</a>
+        <a href="/developers">Partners &amp; API</a>
+        <a href="/about">About</a>
+        <a href="/support">Support</a>
+        <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Marketing console &middot; staff</p>
+          <h1>Reach the right customers in two clicks</h1>
+          <p>Pick an audience, write once, and send an email to customers or push an ENA alert to every browser that turned them on &mdash; with a live preview of exactly what lands.</p>
+        </div>
+
+        <form class="card raised" data-mk-login hidden style="max-width:460px">
+          <h2 style="font-size:24px">Staff sign in</h2>
+          <p class="small">Use the same password as the <a href="/dashboard">staff console</a>.</p>
+          <div class="field"><label for="mk-pw">Console password</label><input id="mk-pw" name="password" type="password" required autocomplete="current-password"></div>
+          <button class="btn" type="submit" style="width:100%">Sign in</button>
+          <div class="msg" data-msg hidden></div>
+        </form>
+
+        <div data-mk-app hidden>
+          <div class="between" style="margin-bottom:16px">
+            <span class="b2 green">&#9679; Signed in as staff</span>
+            <span class="flex"><a class="pill" href="/dashboard">Staff console</a><button class="pill" type="button" data-mk-logout>Sign out</button></span>
+          </div>
+          <div class="msg" data-mk-email-note hidden></div>
+          <form class="tool" data-mk-form novalidate style="margin-top:14px">
+            <div class="tool-grid">
+              <div class="tool-in">
+                <fieldset class="tfield">
+                  <legend>Audience</legend>
+                  <div class="seg-list" data-mk-segments><p class="small">Loading audiences…</p></div>
+                </fieldset>
+                <fieldset class="tfield">
+                  <legend>Channel</legend>
+                  <div class="seg" data-mk-channel>
+                    <button type="button" data-ch="email" aria-pressed="true">Email</button>
+                    <button type="button" data-ch="push" aria-pressed="false">Push</button>
+                    <button type="button" data-ch="both" aria-pressed="false">Both</button>
+                  </div>
+                  <p class="note-inline" data-mk-push-count></p>
+                </fieldset>
+                <div class="tfield">
+                  <label for="mk-tmpl">Campaign template</label>
+                  <select id="mk-tmpl" data-mk-template>
+                    <option value="custom">Custom message</option>
+                    <option value="paymonthly">Buy now, pay small small</option>
+                    <option value="founding50">Founding 50 reservations</option>
+                    <option value="launch">New product launch</option>
+                    <option value="media">New media post / promo</option>
+                    <option value="welfare">Staff welfare scheme</option>
+                  </select>
+                </div>
+                <div class="tfield"><label for="mk-subject">Subject / title</label><input id="mk-subject" name="subject" maxlength="140" placeholder="e.g. Own your power — pay small small"></div>
+                <div class="tfield"><label for="mk-body">Message</label><textarea id="mk-body" name="body" maxlength="4000" placeholder="Write your message to customers…"></textarea></div>
+                <div class="tfield"><label for="mk-url">Link to a page on this site</label><input id="mk-url" name="url" value="/pay-monthly" maxlength="300" placeholder="/pay-monthly"></div>
+                <button class="btn" type="submit" style="width:100%" data-mk-send>Send campaign</button>
+                <div class="msg" data-msg hidden></div>
+              </div>
+              <div class="tool-out">
+                <div data-mk-preview></div>
+                <div>
+                  <p class="field-label" style="margin-top:6px">Recent campaigns</p>
+                  <ul class="campaign-log" data-mk-log><li class="warn">No campaigns yet</li></ul>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="card" style="margin-top:26px">
+            <div class="between"><h2 class="mb0" style="font-size:24px">Advisor leads</h2><span class="tag" data-mk-lead-count></span></div>
+            <div class="table-wrap" style="margin-top:14px"><table class="table"><thead><tr><th>When</th><th>Name</th><th>Contact</th><th>Powering</th><th>System</th><th>Offers</th></tr></thead><tbody data-mk-leads><tr><td colspan="6" class="small">Loading…</td></tr></tbody></table></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="/" style="margin-bottom:12px" aria-label="Enapoint home">
+            <img src="/assets/img/brand/ena-mark-sm.webp" alt="" width="34" height="35">
+            <span>ENAPOINT</span>
+          </a>
+          <p class="small">Decentralised energy &mdash; solar, storage, power conversion and the software that reports on all three. Abuja, Nigeria &middot; Quincy, Massachusetts.</p>
+          <p class="small mb0"><a href="mailto:info@enapoint.com">info@enapoint.com</a><br><a href="tel:+2348179189600">+234 817 918 9600</a></p>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul><li><a href="/panels">ENA Solar Panels</a></li><li><a href="/panels#slates">ENA Slates</a></li><li><a href="/cells">ENA Powerwall</a></li><li><a href="/cells#lit">ENA LIT LI</a></li><li><a href="/pops">POPS</a></li><li><a href="/ev">EV charging</a></li></ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul><li><a href="/about">About Enapoint</a></li><li><a href="/lab">Manufacturing</a></li><li><a href="/refi">Sustainability &amp; impact</a></li><li><a href="/contact">Contact</a></li></ul>
+        </div>
+        <div>
+          <h4>Partners</h4>
+          <ul><li><a href="/developers">Partners &amp; API</a></li><li><a href="/partners/setup">Integration setup</a></li><li><a href="/partners/reference">API reference</a></li><li><a href="/dashboard">Staff console</a></li><li><a href="/marketing">Marketing console</a></li><li><a href="/support">System status</a></li></ul>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <ul><li><a href="/pay-monthly">Pay-monthly planner</a></li><li><a href="/advisor">AI energy advisor</a></li><li><a href="/register">Register a meter</a></li><li><a href="/meter#topup">Buy units</a></li><li><a href="/app">Get ENA Control</a></li><li><a href="/support">Support</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>&copy; 2026 Ena Plus Ltd, trading as Enapoint</span>
+        <span class="flex"><a href="/support">Privacy</a><a href="/support">Terms</a><a href="/support">NDPR</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<script src="/assets/js/ena.js?v=20261114"></script>
+
+<script src="/assets/js/marketing.js?v=20261114"></script>
+</body>
+</html>
