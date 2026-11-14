@@ -6,5 +6,6 @@ Allow: /
 Disallow: /dashboard
 Disallow: /console
 Disallow: /pay/
+Disallow: /marketing
 
 Sitemap: https://www.enapoint.com/sitemap.xml
